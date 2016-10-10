@@ -24,8 +24,8 @@ namespace daos
                 cn.Open();
                 tran = cn.BeginTransaction();
                 int vigente = 1; //Por defecto inserta activo
-                Usuario usuario = DaoUsuario.insertarUsuario(cli.Usuario);
-                Domicilio domicilio = DaoDomicilio.insertarDomicilio(cli.Domicilio);
+                Usuario usuario = DaoUsuario.insertarUsuario(cli.Usuario, cn, tran);
+                Domicilio domicilio = DaoDomicilio.insertarDomicilio(cli.Domicilio, cn, tran);
 
                 string sql = "INSERT INTO personas (nombre,apellido,dni,id_rol,id_usuario,fecha_nacimiento,vigente,id_sexo,telefono,email,id_domicilio)";
                 sql += " VALUES (@Nombre,@Apellido,@Dni,@IdRol,@IdUsuario,@FechaNacimiento,@Vigente,@IdSexo,@Telefono,@Email,@IdDomicilio)";
@@ -35,7 +35,7 @@ namespace daos
                 cmd.Connection = cn;
                 cmd.Transaction = tran;
                 cmd.Parameters.AddWithValue("@Nombre", cli.Nombre);
-                cmd.Parameters.AddWithValue("@Apellido", cli.Nombre);
+                cmd.Parameters.AddWithValue("@Apellido", cli.Apellido);
                 cmd.Parameters.AddWithValue("@Dni", cli.Dni);
                 cmd.Parameters.AddWithValue("@IdRol", cli.Rol.Id);
                 cmd.Parameters.AddWithValue("@IdUsuario", usuario.Id);
@@ -52,10 +52,10 @@ namespace daos
 
 
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 if (cn.State == ConnectionState.Open)
-                    tran.Rollback(); //Vuelvo atras los cambios
+                    tran.Rollback();
                 throw new ApplicationException("Error al insertar cliente." + ex.Message);
             }
             finally
@@ -64,6 +64,42 @@ namespace daos
                     cn.Close();
             }
 
+        }
+
+        public static List<Sexo> listarSexo()
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            Barrio bar = new Barrio();
+            SqlConnection con = new SqlConnection();
+            List<Sexo> sexos = new List<Sexo>();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT * FROM sexo";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    Sexo sexo = new Sexo();
+                    sexo.Id = (int)dr["id"];
+                    sexo.Nombre = dr["nombre"].ToString();
+                    sexos.Add(sexo);
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+
+            return sexos;
         }
     }
 }

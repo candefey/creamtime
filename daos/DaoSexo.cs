@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Data.SqlClient;
 using entidades;
+using System.Data;
 
 namespace daos
 {
@@ -28,8 +29,8 @@ namespace daos
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read()!=false)
                 {
-                    sexo.id = (int)dr["id"];
-                    sexo.nombre = dr["nombre"].ToString();
+                    sexo.Id = (int)dr["id"];
+                    sexo.Nombre = dr["nombre"].ToString();
                 }
                 
             }
@@ -39,8 +40,8 @@ namespace daos
             }
             finally
             {
-                if (cn.State == ConnectionState.Open)
-                    cn.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
 
             return sexo;

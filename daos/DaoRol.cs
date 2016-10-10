@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Data.SqlClient;
 using entidades;
+using System.Data;
 
 namespace daos
 {
@@ -20,17 +21,17 @@ namespace daos
             {
                 con.ConnectionString = cadenaConexion;
                 con.Open();
-                string sql = "SELECT id FROM rol WHERE nombre LIKE @nombre";
+                string sql = "SELECT * FROM rol WHERE nombre LIKE @nombre";
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = sql;
                 cmd.Connection = con;
                 cmd.Parameters.AddWithValue("@nombre", nombre);
                 SqlDataReader dr = cmd.ExecuteReader();
-                if (dr.Read() != false)
+                if (dr.Read())
                 {
-                    rol.id = (int)dr["id"];
-                    rol.nombre = dr["nombre"].ToString();
-                    rol.descripcion = dr["descripcion"].ToString();
+                    rol.Id = (int)dr["id"];
+                    rol.Nombre = dr["nombre"].ToString();
+                    rol.Descripcion = dr["descripcion"].ToString();
                 }
             }
             catch (SqlException ex)
@@ -39,8 +40,8 @@ namespace daos
             }
             finally
             {
-                if (cn.State == ConnectionState.Open)
-                    cn.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
 
             return rol;

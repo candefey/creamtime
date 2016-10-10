@@ -11,7 +11,6 @@ namespace entidades
         public int? Id { get; set; }
         public string Calle { get; set; }
         public Barrio Barrio { get; set; }
-        public int Numero { get; set; }
+        public string Numero { get; set; }
     }
 }
-s

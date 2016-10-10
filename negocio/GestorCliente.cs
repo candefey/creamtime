@@ -13,7 +13,21 @@ namespace negocio
         public static void insertarCliente(Cliente c)
         {
             DaoCliente dao = new DaoCliente();
-            dao.insertarCliente(Cliente c);
+            dao.insertarCliente(c);
+        }
+
+        public static List<Localidad> listarLocalidades()
+        {
+            return DaoDomicilio.listarLocalidades();
+        }
+
+        public static List<Barrio> listarBarrios(int id)
+        {
+            return DaoDomicilio.listarBarrios(id);
+        }
+        public static List<Sexo> listarSexo()
+        {
+            return DaoCliente.listarSexo();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace entidades
         public DateTime Fecha_nacimiento { get; set; }
         public Boolean Vigente { get; set; }
         public Sexo Sexo { get; set; }
-        public long Telefono { get; set; }
+        public string Telefono { get; set; }
         public string Email { get; set; }
         public Domicilio Domicilio { get; set; }
     }
