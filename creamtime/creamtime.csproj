@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AbmCliente.aspx" />
+    <Content Include="AbmProveedor.aspx" />
     <Content Include="About.aspx" />
     <Content Include="Account\AddPhoneNumber.aspx" />
     <Content Include="Account\Confirm.aspx" />
@@ -186,6 +187,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Proveedor\abmProveedor.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
@@ -215,7 +217,9 @@
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
     <Content Include="ViewSwitcher.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -235,6 +239,13 @@
     </Compile>
     <Compile Include="AbmCliente.aspx.designer.cs">
       <DependentUpon>AbmCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AbmProveedor.aspx.cs">
+      <DependentUpon>AbmProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AbmProveedor.aspx.designer.cs">
+      <DependentUpon>AbmProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\AddPhoneNumber.aspx.cs">
       <DependentUpon>AddPhoneNumber.aspx</DependentUpon>

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="DaoCliente.cs" />
     <Compile Include="DaoDomicilio.cs" />
+    <Compile Include="DaoProveedor.cs" />
     <Compile Include="DaoRol.cs" />
     <Compile Include="DaoSexo.cs" />
     <Compile Include="DaoUsuario.cs" />

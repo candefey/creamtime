@@ -45,6 +45,7 @@
     <Compile Include="Domicilio.cs" />
     <Compile Include="Localidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proveedor.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Sexo.cs" />
     <Compile Include="Usuario.cs" />
