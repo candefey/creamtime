@@ -29,5 +29,10 @@ namespace negocio
         {
             return DaoCliente.listarSexo();
         }
+
+        public static Boolean existeCliente(int dni)
+        {
+            return DaoCliente.existeCliente(dni);
+        }
     }
 }

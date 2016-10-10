@@ -101,5 +101,40 @@ namespace daos
 
             return sexos;
         }
+
+        public static Boolean existeCliente(int dni)
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+            Boolean flag = false;
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT * FROM personas WHERE dni=@Dni";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                cmd.Parameters.Add(new SqlParameter("@Dni", dni));
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    flag = true;
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+
+            return flag;
+        }
     }
 }

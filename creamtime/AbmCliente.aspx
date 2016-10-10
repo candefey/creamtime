@@ -4,6 +4,21 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent"  ClientIDMode="Static" runat="server">
 
+<link href="Scripts/jquery-ui-1.12/jquery-ui-datepicker.css" rel="stylesheet" />  
+<script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script> 
+<script>  
+$(function ()  
+{  
+    $('#txt_cliente_fecha_nac').datepicker(  
+    {  
+        dateFormat: 'dd/mm/yy',  
+        changeMonth: true,  
+        changeYear: true,  
+        yearRange: '1925:2100',
+        maxDate: '-18Y',
+    });  
+})  
+</script>  
         <br/>
         <strong>
         <asp:Label ID="lbl_success" class="alert alert-success" runat="server" Text=""></asp:Label>
@@ -25,13 +40,14 @@
 
      <div class="form-group">
          <asp:RequiredFieldValidator ID="validator_cliente_dni" runat="server" ControlToValidate="txt_cliente_dni" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
-        <asp:TextBox placeholder="Numero de Documento" type="number" class="form-control" ID="txt_cliente_dni" runat="server"></asp:TextBox>
+        <asp:TextBox placeholder="Numero de Documento" class="form-control" ID="txt_cliente_dni" runat="server"></asp:TextBox>
      </div>
 
      <div class="form-group">
          <asp:RequiredFieldValidator ID="validator_cliente_fecha" runat="server" ControlToValidate="txt_cliente_fecha_nac" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
          <asp:CompareValidator ID="validator_compare_cliente_fecha" runat="server" ControlToValidate="txt_cliente_fecha_nac" ErrorMessage="*El campo debe ser de tipo fecha" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True" Operator="DataTypeCheck" Type="Date"></asp:CompareValidator>
         <asp:TextBox placeholder="Seleccione Fecha de Nacimiento" class="form-control" ID="txt_cliente_fecha_nac" runat="server"></asp:TextBox>
+          <small id="fechaHelp" class="form-text text-muted">Debes ser mayor de 18 años para registrarte</small>
      </div>
 
     <div class="form-group">

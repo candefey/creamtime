@@ -64,13 +64,18 @@ namespace creamtime
                 try
                 {
 
-
-
                     if (txt_cliente_nombre.Text != "" && txt_cliente_apellido.Text != "" && txt_cliente_dni.Text != ""
                         && txt_cliente_domicilio.Text != "" && txt_cliente_fecha_nac.Text != "" && txt_cliente_numero.Text != "" &&
                         txt_cliente_email.Text != "" && txt_cliente_telefono.Text != "" && txt_usuario.Text != "" && txt_contrasenia.Text != ""
                         && txt_contrasenia2.Text != "")
                     {
+                        Int32 dni = Convert.ToInt32(txt_cliente_dni.Text);
+
+                        if (GestorCliente.existeCliente(dni))
+                        {
+                            throw new ApplicationException("Cliente");
+                        }
+
                         Cliente nuevo_cli = new Cliente();
                         Usuario nuevo_usr = new Usuario();
                         Rol rol_cliente = GestorRol.obtenerRolPorNombre("Cliente");
@@ -85,7 +90,7 @@ namespace creamtime
 
                         nuevo_cli.Nombre = txt_cliente_nombre.Text;
                         nuevo_cli.Apellido = txt_cliente_apellido.Text;
-                        Int32 dni = Convert.ToInt32(txt_cliente_dni.Text);
+                        
                         nuevo_cli.Fecha_nacimiento = Convert.ToDateTime(txt_cliente_fecha_nac.Text);
                         if ((txt_cliente_dni.Text.Length == 8 || txt_cliente_dni.Text.Length == 8) && dni >= 900000)
                         {
@@ -122,7 +127,7 @@ namespace creamtime
 
                         if (GestorUsuario.existeUsuario(nuevo_usr))
                         {
-                            //Devolver mensaje de usuario existente
+                            throw new ApplicationException("Usuario");
                         }
                         else
                         {
@@ -141,10 +146,36 @@ namespace creamtime
 
                     }
                 }
+                
+                catch(ApplicationException ap)
+                {
+                    if (ap.Message == "Usuario")
+                    {
+                        lbl_warning.Text = "Atencion! El usuario ingresado ya existe, utilice otro";
+                        lbl_warning.Visible = true;
+                        txt_usuario.Text = "";
+                        txt_contrasenia.Text = "";
+                        txt_contrasenia2.Text = "";
+                    }
+                    if (ap.Message == "Cliente")
+                    {
+                        lbl_warning.Text = "Atencion! Ya existe un cliente con el DNI ingresado";
+                        lbl_warning.Visible = true;
+                        txt_cliente_dni.Text = "";
+                        txt_contrasenia.Text = "";
+                        txt_contrasenia2.Text = "";
+                    }
+                    else
+                    {
+                        lbl_error.Text = "Error en la registracion! Por favor, revise los campos e intente nuevamente";
+                        lbl_error.Visible = true;
+                    }
+
+                }
 
                 catch (Exception ex)
                 {
-                    lbl_error.Text = "Ha surgido un error en la creacion del usuario";
+                    lbl_error.Text = "Ha surgido un error inesperado, contacte a su administrador";
                     lbl_error.Visible=true;
                 }
 
