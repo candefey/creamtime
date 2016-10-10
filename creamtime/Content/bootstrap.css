@@ -4382,10 +4382,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
     margin-left: 15px;
   }
 }
-
+/* Color navbar superior redefinida */
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: #c0e6f3;
+  border-color: #c0e6f3;
 }
 
 .navbar-default .navbar-brand {
