@@ -40,6 +40,15 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.Label lbl_warning;
         
         /// <summary>
+        /// Control validator_razon_social.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_razon_social;
+        
+        /// <summary>
         /// Control txt_razon.
         /// </summary>
         /// <remarks>
@@ -47,6 +56,24 @@ namespace creamtime {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_razon;
+        
+        /// <summary>
+        /// Control validator_cuit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_cuit;
+        
+        /// <summary>
+        /// Control validator_cuit_compare.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CompareValidator validator_cuit_compare;
         
         /// <summary>
         /// Control txt_cuit.
@@ -58,6 +85,24 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.TextBox txt_cuit;
         
         /// <summary>
+        /// Control validator_proveedor_telefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_proveedor_telefono;
+        
+        /// <summary>
+        /// Control validator_regex_proveedor_telefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator validator_regex_proveedor_telefono;
+        
+        /// <summary>
         /// Control txt_proveedor_telefono.
         /// </summary>
         /// <remarks>
@@ -65,6 +110,24 @@ namespace creamtime {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_proveedor_telefono;
+        
+        /// <summary>
+        /// Control validator_cliente_email.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_cliente_email;
+        
+        /// <summary>
+        /// Control validator_regex_proveedor_email.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator validator_regex_proveedor_email;
         
         /// <summary>
         /// Control txt_proveedor_email.

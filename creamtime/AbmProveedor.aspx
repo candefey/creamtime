@@ -9,27 +9,47 @@
         <asp:Label ID="lbl_warning" class="alert alert-warning" runat="server" Text=""></asp:Label>
     </strong>
 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( document ).tooltip();
+  } );
+  </script>
+  <style>
+  title {
+    display: inline-block;
+    width: 5em;
+  }
+  </style>
+
     <h3>Registro de Proveedor</h3>
     <div class="form-group">
-        <asp:TextBox placeholder="Razón Social"  required="true" class="form-control" ID="txt_razon" runat="server"></asp:TextBox>
+         <asp:RequiredFieldValidator ID="validator_razon_social" runat="server" ControlToValidate="txt_razon" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
+        <asp:TextBox placeholder="Razón Social" class="form-control" ID="txt_razon" runat="server"></asp:TextBox>
     </div>
-
-    <div class="form-group">
-        <asp:TextBox placeholder="Cuit" class="form-control" required="true" ID="txt_cuit" runat="server"></asp:TextBox>
-    </div>
-
-    <div class="form-group">
+     <div class="form-group">
         <label id="lbl_fecha_alta_text">Fecha de Alta: </label>
         <label id="lbl_fecha_alta"></label>
     </div>
 
     <div class="form-group">
-        <asp:TextBox placeholder="Telefono Fijo o Celular" required="true" class="form-control" ID="txt_proveedor_telefono" runat="server"></asp:TextBox>
-        <small id="telHelp" class="form-text text-muted">Formato valido de telefono: 0351-154545454 / 0351-4601111</small>
+        <asp:RequiredFieldValidator ID="validator_cuit" runat="server" ControlToValidate="txt_cuit" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
+        <asp:CompareValidator ID="validator_cuit_compare" ControlToValidate="txt_cuit" Operator="DataTypeCheck" Type="Integer" ErrorMessage="*Tipo de dato inválido" runat="server" ForeColor="#CC3300" SetFocusOnError="True" Display="Dynamic"></asp:CompareValidator>
+        <asp:TextBox placeholder="Cuit" class="form-control" ID="txt_cuit" title="Formato válido de cuit: 27356478993" runat="server"></asp:TextBox>        
+    </div>
+   
+
+    <div class="form-group">
+        <asp:RequiredFieldValidator ID="validator_proveedor_telefono" runat="server" ControlToValidate="txt_proveedor_telefono" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="validator_regex_proveedor_telefono" runat="server"  ControlToValidate="txt_proveedor_telefono" ErrorMessage="*Formato invalido." Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True" ValidationExpression="\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4}){0,50}"></asp:RegularExpressionValidator>
+        <asp:TextBox placeholder="Telefono Fijo o Celular" class="form-control" ID="txt_proveedor_telefono" tittle="Formato valido de telefono: 0351-154545454 / 0351-4601111" runat="server"></asp:TextBox>
     </div>
     <div class="form-group">
-        <asp:TextBox placeholder="Email" type="email" class="form-control" ID="txt_proveedor_email" runat="server"></asp:TextBox>
-        <small id="emailHelp" class="form-text text-muted">Formato valido de email: ejemplo@ejemplo.com</small>
+        <asp:RequiredFieldValidator ID="validator_cliente_email" runat="server" ControlToValidate="txt_proveedor_email" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="validator_regex_proveedor_email" runat="server" ControlToValidate="txt_proveedor_email" ErrorMessage="*Formato invalido" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+        <asp:TextBox placeholder="Email" type="email" class="form-control" ID="txt_proveedor_email" title="Formato valido de email: ejemplo@ejemplo.com" runat="server"></asp:TextBox>
     </div>
 
     <div class="form-group">

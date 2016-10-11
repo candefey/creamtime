@@ -36,3 +36,10 @@ input[type="select"] {
         padding: 0;
     }
 }
+
+
+/* Color navbar superior redefinida */
+.navbar-default {
+    background-color: #c0e6f3;
+    border-color: #c0e6f3;
+}
