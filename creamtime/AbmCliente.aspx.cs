@@ -78,6 +78,7 @@ namespace creamtime
 
                         Cliente nuevo_cli = new Cliente();
                         Usuario nuevo_usr = new Usuario();
+
                         Rol rol_cliente = GestorRol.obtenerRolPorNombre("Cliente");
                         if (rol_cliente.Nombre != null)
                         {
@@ -124,15 +125,17 @@ namespace creamtime
                         nuevo_usr.Username = txt_usuario.Text;
                         nuevo_usr.Password = txt_contrasenia.Text;
 
-
-                        if (GestorUsuario.existeUsuario(nuevo_usr))
+                        Usuario check_user = GestorUsuario.existeUsuario(nuevo_usr);
+                        if (check_user.Username != null && check_user.ClienteId==null)
                         {
-                            throw new ApplicationException("Usuario");
+
+                            nuevo_cli.Usuario = check_user;
+                            GestorCliente.insertarCliente(nuevo_cli);
+                            
                         }
                         else
                         {
-                            nuevo_cli.Usuario = nuevo_usr;
-                            GestorCliente.insertarCliente(nuevo_cli);
+                            throw new ApplicationException("Usuario");
                         }
 
                         lbl_success.Text = "Usted ha sido registrado con exito!";
@@ -165,7 +168,7 @@ namespace creamtime
                         txt_contrasenia.Text = "";
                         txt_contrasenia2.Text = "";
                     }
-                    else
+                    if(ap.Message!="Usuario" && ap.Message!="Cliente")
                     {
                         lbl_error.Text = "Error en la registracion! Por favor, revise los campos e intente nuevamente";
                         lbl_error.Visible = true;

@@ -11,6 +11,31 @@ namespace creamtime
 {
     public partial class AbmProveedor : System.Web.UI.Page
     {
+        protected void Page_Prerender(object sender, EventArgs e)
+        {
+            if (Session["user"] != null)
+            {
+                Usuario user = (Usuario) Session["user"];
+                user = GestorUsuario.retornarUsuario(user);
+                if (GestorCliente.esPersonalAutorizado(user.ClienteId))
+                {
+                    this.Page_Load(sender, e);
+                }
+                else
+                {
+                    Response.Redirect("~/403Forbidden.aspx", false);
+                }
+
+            }
+            else
+            {
+                Response.Redirect("~/Account/Login.aspx", false);
+            }
+        }
+
+
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

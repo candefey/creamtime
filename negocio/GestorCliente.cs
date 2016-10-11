@@ -34,5 +34,10 @@ namespace negocio
         {
             return DaoCliente.existeCliente(dni);
         }
+
+        public static Boolean esPersonalAutorizado(int? id)
+        {
+            return DaoCliente.esPersonalAutorizado(id);
+        }
     }
 }
