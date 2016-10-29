@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Barrio.cs" />
     <Compile Include="Cliente.cs" />
+    <Compile Include="ClienteView.cs" />
     <Compile Include="Domicilio.cs" />
     <Compile Include="Localidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

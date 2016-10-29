@@ -33,6 +33,8 @@ namespace daos
                     rol.Nombre = dr["nombre"].ToString();
                     rol.Descripcion = dr["descripcion"].ToString();
                 }
+
+                dr.Close();
             }
             catch (SqlException ex)
             {

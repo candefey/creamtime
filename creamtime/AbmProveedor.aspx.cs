@@ -15,21 +15,19 @@ namespace creamtime
         {
             if (Session["user"] != null)
             {
-                Usuario user = (Usuario) Session["user"];
-                user = GestorUsuario.retornarUsuario(user);
-                if (GestorCliente.esPersonalAutorizado(user.ClienteId))
-                {
+                if ((String)Session["user_perm"] == "Personal")
+                { 
                     this.Page_Load(sender, e);
                 }
                 else
                 {
-                    Response.Redirect("~/403Forbidden.aspx", false);
+                    Response.Redirect("~/403Forbidden", false);
                 }
 
             }
             else
             {
-                Response.Redirect("~/Account/Login.aspx", false);
+                Response.Redirect("~/Login", false);
             }
         }
 

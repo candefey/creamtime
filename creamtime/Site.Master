@@ -53,27 +53,43 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/About">Acerca de Nosotros</a></li>
+                        <li><a runat="server" href="~/Contact">Info de Contacto</a></li>
                     </ul>
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
+                           
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/AbmCliente">Registrarse</a></li>
-                                <li><a runat="server" href="~/Account/Login">Iniciar Sesion</a></li>
-                                <li><a runat="server" href="~/AbmCliente">Abm Cliente</a></li>
-                                <li><a runat="server" href="~/AbmProveedor">Abm Proveedor</a></li>
+                               
+                                
+                                   <%   
+                                     if (Session["user"] == null)  
+                                     {
+                                 %>
+                                        <li><a runat="server" href="~/AbmCliente">Registrarse</a></li>
+                                        <li><a runat="server" href="~/Login">Iniciar Sesion</a></li>
+                                 <%                
+                                     }
+                                 %> 
+
+                                 <%   
+                                     if (Session["user"] != null && (String)Session["user_perm"]=="Personal")  
+                                     {
+                                 %>
+                                       <li><a runat="server" href="~/AbmProveedor">Proveedores</a></li>
+                                       <li><a runat="server" href="~/GestionCliente">Clientes</a></li>  
+                                 <%                
+                                     }
+                                 %> 
+                                 <%   
+                                     if (Session["user"] != null)  
+                                     {
+                                 %>
+                                     <li><asp:LinkButton ID="link_cerrar_sesion" runat="server" CausesValidation="False" OnClick="button_clicked"></asp:LinkButton></li>  
+                                 <%                
+                                     }
+                                 %> 
                             </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
-                                <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
-                                </li>
-                            </ul>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
+
+
                 </div>
             </div>
         </div>

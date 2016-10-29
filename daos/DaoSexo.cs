@@ -32,6 +32,8 @@ namespace daos
                     sexo.Id = (int)dr["id"];
                     sexo.Nombre = dr["nombre"].ToString();
                 }
+
+                dr.Close();
                 
             }
             catch (SqlException ex)

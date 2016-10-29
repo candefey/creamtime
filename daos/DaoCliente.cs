@@ -90,7 +90,12 @@ namespace daos
                     sexo.Nombre = dr["nombre"].ToString();
                     sexos.Add(sexo);
                 }
+
+                dr.Close();
             }
+
+            
+
             catch (SqlException ex)
             {
                 throw new ApplicationException("" + ex.Message);
@@ -125,54 +130,6 @@ namespace daos
                     flag = true;
                 }
 
-            }
-            catch (SqlException ex)
-            {
-                throw new ApplicationException("" + ex.Message);
-            }
-            finally
-            {
-                if (con.State == ConnectionState.Open)
-                    con.Close();
-            }
-
-            return flag;
-        }
-
-        public static Boolean esPersonalAutorizado(int? id)
-        {
-            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
-            SqlConnection con = new SqlConnection();
-            Boolean flag = false;
-            try
-            {
-                con.ConnectionString = cadenaConexion;
-                con.Open();
-                string sql1 = "SELECT * FROM personas WHERE id=@Id AND vigente=1";
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = sql1;
-                cmd.Connection = con;
-                cmd.Parameters.Add(new SqlParameter("@Id", id));
-                SqlDataReader dr = cmd.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    int idClienteRol = (int)dr["id_rol"];
-                    dr.Close();
-                    string sql2 = "SELECT nombre FROM rol WHERE id=@IdRol";
-                    cmd.CommandText = sql2;
-                    cmd.Parameters.Add(new SqlParameter("@IdRol", idClienteRol));
-                    dr = cmd.ExecuteReader();
-                    if(dr.Read())
-                    {
-                        string nombreRol = dr["nombre"].ToString();
-                        if (nombreRol=="Personal")
-                        {
-                            flag = true;
-                        }
-                    }
-                }
-
                 dr.Close();
 
             }
@@ -189,11 +146,13 @@ namespace daos
             return flag;
         }
 
+
         public static Boolean esClienteVigente(int? id)
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
             SqlConnection con = new SqlConnection();
             Boolean flag = false;
+
             try
             {
                 con.ConnectionString = cadenaConexion;
@@ -210,7 +169,108 @@ namespace daos
                     flag = true;
                 }
 
+                dr.Close();
+
             }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+   
+            }
+
+            return flag;
+        }
+
+        public static string obtenerRolDeCliente(int? id)
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+            string rol = "";
+
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT r.nombre AS 'nombre_rol' FROM personas p INNER JOIN rol r ON r.id=p.id_rol WHERE p.id=@Id AND vigente=1";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                cmd.Parameters.Add(new SqlParameter("@Id", id));
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    rol = dr["nombre_rol"].ToString();
+                }
+
+                dr.Close();
+
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+
+            }
+
+            return rol;
+        }
+
+        public static List<ClienteView> obtenerClientes()
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            Barrio bar = new Barrio();
+            SqlConnection con = new SqlConnection();
+            List<ClienteView> clientes = new List<ClienteView>();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT p.*, u.username,d.calle,d.numero,b.nombre AS 'barrio',s.nombre AS 'sexo', l.nombre AS 'localidad' FROM personas p INNER JOIN rol r ON p.id_rol=r.id INNER JOIN usuarios u ON u.id_persona=p.id";
+                sql += " INNER JOIN domicilios d ON p.id_domicilio=d.id INNER JOIN barrios b ON d.id_barrio=b.id"; 
+                sql+=" INNER JOIN sexo s ON s.id=p.id_sexo INNER JOIN localidades l ON l.id=b.id_localidad WHERE p.vigente=1 and r.nombre='Cliente';";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    DateTime fecha_nac = (DateTime)dr["fecha_nacimiento"];
+                    var now = float.Parse(DateTime.Now.ToString("yyyyMMdd"));
+                    var dob = float.Parse(fecha_nac.ToString("yyyyMMdd"));
+                    var age = (int)(now - dob) / 10000;
+                    ClienteView cliente = new ClienteView();
+                    cliente.Nombre = dr["nombre"].ToString();
+                    cliente.Apellido = dr["apellido"].ToString();
+                    cliente.Dni = (long)dr["dni"];
+                    cliente.Usuario = dr["username"].ToString();
+                    cliente.Edad = age;
+                    cliente.Sexo = dr["sexo"].ToString();
+                    cliente.Telefono = dr["telefono"].ToString();
+                    cliente.Email = dr["email"].ToString();
+                    cliente.Calle = dr["calle"].ToString();
+                    cliente.Numero = dr["numero"].ToString();
+                    cliente.Barrio = dr["barrio"].ToString();
+                    cliente.Localidad = dr["localidad"].ToString();
+
+                    clientes.Add(cliente);
+
+                }
+
+                dr.Close();
+            }
+
+
+
             catch (SqlException ex)
             {
                 throw new ApplicationException("" + ex.Message);
@@ -221,7 +281,7 @@ namespace daos
                     con.Close();
             }
 
-            return flag;
+            return clientes;
         }
     }
 }

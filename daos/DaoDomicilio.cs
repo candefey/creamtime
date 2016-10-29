@@ -63,6 +63,8 @@ namespace daos
                     loc.Nombre = dr["nombre"].ToString();
                     locs.Add(loc);
                 }
+
+                dr.Close();
             }
             catch (SqlException ex)
             {
@@ -99,6 +101,8 @@ namespace daos
                     bar.Nombre = dr["nombre"].ToString();
                     bars.Add(bar);   
                 }
+
+                dr.Close();
             }
             catch (SqlException ex)
             {

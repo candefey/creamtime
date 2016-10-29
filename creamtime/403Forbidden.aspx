@@ -7,6 +7,8 @@
     <title></title>
 </head>
 <body>
-    <h4>No tiene permiso para acceder a esta pagina</h4>
+    <h3>CreamTime Helados lamenta informarle</h3>
+    <h4>Usted no tiene permiso para acceder a esta pagina</h4>
+    <a runat="server" href="~/">Volver</a>
 </body>
 </html>

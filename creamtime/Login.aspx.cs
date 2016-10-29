@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
@@ -10,7 +11,7 @@ using negocio;
 
 namespace creamtime.Account
 {
-    public partial class Login : Page
+    public partial class Login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,11 +27,13 @@ namespace creamtime.Account
             if (GestorUsuario.login(usuario))
             {
                 Session["user"] = usuario;
-                Response.Redirect("~/AbmCliente.aspx", false);
+                Session["user_perm"] = GestorCliente.obtenerRolDeCliente(usuario.ClienteId);
+                Response.Redirect("~/AbmCliente", false);
+                
             }
             else
             {
-                Response.Redirect("~/AbmCliente.aspx", false);
+                Response.Redirect("~/AbmCliente", false);
             }
         }
     }

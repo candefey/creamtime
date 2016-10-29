@@ -79,6 +79,8 @@ namespace daos
                     user_query.Username = dr["username"].ToString();
                     user_query.ClienteId = (int)dr["id_persona"];
                 }
+
+                dr.Close();
                 
             }
             catch (SqlException ex)
@@ -121,6 +123,8 @@ namespace daos
                         usuario.ClienteId = (int)dr["id_persona"];
                     }
                 }
+
+                dr.Close();
 
             }
             catch (SqlException ex)

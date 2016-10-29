@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using entidades;
 
 namespace creamtime
 {
@@ -15,11 +16,13 @@ namespace creamtime
         private const string AntiXsrfTokenKey = "__AntiXsrfToken";
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
+        
 
         protected void Page_Init(object sender, EventArgs e)
         {
-            // The code below helps to protect against XSRF attacks
-            var requestCookie = Request.Cookies[AntiXsrfTokenKey];
+            
+        // The code below helps to protect against XSRF attacks
+        var requestCookie = Request.Cookies[AntiXsrfTokenKey];
             Guid requestCookieGuidValue;
             if (requestCookie != null && Guid.TryParse(requestCookie.Value, out requestCookieGuidValue))
             {
@@ -69,13 +72,27 @@ namespace creamtime
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario user = new Usuario();
+            user = (Usuario)Session["user"];
+            if (user!=null)
+            {
+                link_cerrar_sesion.Text = user.Username + " | Cerrar Sesion";
+            }
+            
+        }
 
+        protected void button_clicked(object sender, EventArgs e)
+        {
+            Session["user"] = null;
+            Session["user_perm"] = null;
+            Response.Redirect("~/Login", false);
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
+
     }
 
 }
