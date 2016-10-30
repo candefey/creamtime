@@ -11,4 +11,5 @@
     }
     var today = dd + '/' + mm + '/' + yyyy;
     document.getElementById('lbl_fecha_alta').innerHTML = today;
+   
 });
