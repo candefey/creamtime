@@ -83,14 +83,34 @@ namespace creamtime
                         Cliente nuevo_cli = new Cliente();
                         Usuario nuevo_usr = new Usuario();
 
-                        Rol rol_cliente = GestorRol.obtenerRolPorNombre("Cliente");
-                        if (rol_cliente.Nombre != null)
+                        Rol rol_cliente = new Rol();
+                        if (Session["user"] != null)
                         {
-                            nuevo_cli.Rol = rol_cliente;
+                            if ((String)Session["user_perm"] == "Personal")
+                            {
+                                rol_cliente = GestorRol.obtenerRolPorNombre("Personal");
+                                if (rol_cliente != null)
+                                {
+                                    nuevo_cli.Rol = rol_cliente;
+                                }
+                            }
+                            else
+                            {
+                                rol_cliente = GestorRol.obtenerRolPorNombre("Cliente");
+                                if (rol_cliente != null)
+                                {
+                                    nuevo_cli.Rol = rol_cliente;
+                                }
+                            }
+                            
                         }
                         else
                         {
-                            throw new ApplicationException("Error en Rol");
+                            rol_cliente = GestorRol.obtenerRolPorNombre("Cliente");
+                            if (rol_cliente != null)
+                            {
+                                nuevo_cli.Rol = rol_cliente;
+                            }
                         }
 
                         nuevo_cli.Nombre = txt_cliente_nombre.Text;

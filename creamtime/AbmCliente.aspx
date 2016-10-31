@@ -34,8 +34,20 @@
         <asp:Label ID="lbl_error" class="alert alert-danger" runat="server" Text=""></asp:Label>
         <asp:Label ID="lbl_warning" class="alert alert-warning" runat="server" Text=""></asp:Label>
         </strong>
-
+     <%   
+    if (Session["user"] != null && (String)Session["user_perm"] == "Personal")
+    {
+      %>
+     <h3>Registrar un nuevo empleado</h3>
+     <%                
+    }
+    else
+    {
+     %> 
     <h3>Registrate para hacer un pedido</h3>
+    <%
+        }
+    %>
 
      <div class="form-group">
          <asp:RequiredFieldValidator ID="validator_cliente_nombre" runat="server" ControlToValidate="txt_cliente_nombre" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>

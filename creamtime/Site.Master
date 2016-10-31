@@ -53,9 +53,20 @@
                     </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
+
+                         <%   
+                        if (Session["user"] == null || (Session["user"] != null && (String)Session["user_perm"]!="Personal"))  
+                           {
+                        %>
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">Acerca de Nosotros</a></li>
                         <li><a runat="server" href="~/Contact">Info de Contacto</a></li>
+                         <%                
+                         }
+                         %> 
+
+
+                      
                     </ul>
                            
                             <ul class="nav navbar-nav navbar-right">
@@ -77,7 +88,8 @@
                                  %>
                                        <li><a runat="server" href="~/AbmProveedor">Proveedores</a></li>
                                        <li><a runat="server" href="~/GestionCliente">Clientes</a></li>
-                                       <li><a runat="server" href="~/AbmProducto">Productos</a></li>   
+                                       <li><a runat="server" href="~/AbmProducto">Productos</a></li>
+                                       <li><a runat="server" href="~/AbmCliente">Registrar Empleado</a></li>    
                                  <%                
                                      }
                                  %> 
