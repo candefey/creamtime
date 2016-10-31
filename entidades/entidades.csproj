@@ -57,6 +57,7 @@
     <Compile Include="ProductoView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedor.cs" />
+    <Compile Include="ProveedorView.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Sexo.cs" />
     <Compile Include="TipoProducto.cs" />

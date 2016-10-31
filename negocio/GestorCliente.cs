@@ -12,8 +12,8 @@ namespace negocio
     {
         public static void insertarCliente(Cliente c)
         {
-            DaoCliente dao = new DaoCliente();
-            dao.insertarCliente(c);
+
+            DaoCliente.insertarCliente(c);
         }
 
         public static List<Localidad> listarLocalidades()
@@ -43,6 +43,21 @@ namespace negocio
         public static List<ClienteView> obtenerClientes()
         {
             return DaoCliente.obtenerClientes();
+        }
+
+        public static Cliente obtenerClientesDni(int dni)
+        {
+            return DaoCliente.obtenerClienteDni(dni);
+        }
+
+        public static void actualizarCliente(Cliente cliente)
+        {
+            DaoCliente.actualizarCliente(cliente);
+        }
+
+        public static void eliminarCliente(int dni)
+        {
+            DaoCliente.eliminarCliente(dni);
         }
     }
 }

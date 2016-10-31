@@ -15,11 +15,16 @@ namespace creamtime.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if(!Page.IsPostBack)
+            {
+                lbl_warning.Visible = false;
+            }
+            
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
+            lbl_warning.Visible = false;
             Usuario usuario = new Usuario();
             usuario.Username = Email.Text;
             usuario.Password = Password.Text;
@@ -33,7 +38,8 @@ namespace creamtime.Account
             }
             else
             {
-                Response.Redirect("~/AbmCliente", false);
+                lbl_warning.Text = "Error en el usuario y/contraseña, intente nuevamente";
+                lbl_warning.Visible = true;
             }
         }
     }

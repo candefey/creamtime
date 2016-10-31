@@ -10,9 +10,9 @@ using System.Data;
 
 namespace daos
 {
-    public class DaoCliente
+    public static class DaoCliente
     {
-        public void insertarCliente(Cliente cli)
+        public static void insertarCliente(Cliente cli)
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
             SqlConnection cn = new SqlConnection();
@@ -66,6 +66,94 @@ namespace daos
                     cn.Close();
             }
 
+        }
+
+        public static void actualizarCliente(Cliente cli)
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection cn = new SqlConnection();
+            SqlTransaction tran = null;
+
+            try
+            {
+                cn.ConnectionString = cadenaConexion;
+                cn.Open();
+                tran = cn.BeginTransaction();
+
+                if(cli.Domicilio!=null)
+                {
+                    DaoDomicilio.actualizarDomicilio(cli.Domicilio, cn, tran);
+                }
+                if(cli.Usuario!=null)
+                {
+                    DaoUsuario.actualizarUsuario(cli.Usuario, cn, tran, cli.Id);
+                }
+
+                string sql = "UPDATE personas SET ";
+                sql+= "nombre=@Nombre,apellido=@Apellido,fecha_nacimiento=@FechaNacimiento,id_sexo=@IdSexo,telefono=@Telefono,email=@Email WHERE id=@Id";
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = cn;
+                cmd.Transaction = tran;
+                cmd.Parameters.AddWithValue("@Nombre", cli.Nombre);
+                cmd.Parameters.AddWithValue("@Apellido", cli.Apellido);
+                cmd.Parameters.AddWithValue("@Id", cli.Id);
+                cmd.Parameters.AddWithValue("@FechaNacimiento", cli.Fecha_nacimiento);
+                cmd.Parameters.AddWithValue("@IdSexo", cli.Sexo.Id);
+                cmd.Parameters.AddWithValue("@Telefono", cli.Telefono);
+                cmd.Parameters.AddWithValue("@Email", cli.Email);
+
+                cmd.ExecuteNonQuery();
+
+                tran.Commit();
+
+
+            }
+            catch (Exception ex)
+            {
+                if (cn.State == ConnectionState.Open)
+                    tran.Rollback();
+                throw new ApplicationException("Error al insertar cliente." + ex.Message);
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
+                    cn.Close();
+            }
+        }
+
+        public static void eliminarCliente(int dni)
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection cn = new SqlConnection();
+
+
+            try
+            {
+                cn.ConnectionString = cadenaConexion;
+                cn.Open();
+
+
+                string sql = "UPDATE personas SET ";
+                sql += "vigente=0 WHERE dni=@Dni";
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@Dni", dni);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                if (cn.State == ConnectionState.Open)
+                throw new ApplicationException("Error al insertar cliente." + ex.Message);
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
+                    cn.Close();
+            }
         }
 
         public static List<Sexo> listarSexo()
@@ -283,5 +371,71 @@ namespace daos
 
             return clientes;
         }
+
+        public static Cliente obtenerClienteDni(int dni)
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            Barrio bar = new Barrio();
+            Localidad loc = new Localidad();
+            Usuario user = new Usuario();
+            Cliente cli = new Cliente();
+            Sexo sexo = new Sexo();
+            Domicilio dom = new Domicilio();
+            SqlConnection con = new SqlConnection();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT p.*, u.username,u.id AS 'userid',d.calle,d.numero,d.id AS 'domicilioid',b.nombre AS 'barrio',s.nombre AS 'sexo', l.nombre AS 'localidad' FROM personas p INNER JOIN rol r ON p.id_rol=r.id INNER JOIN usuarios u ON u.id_persona=p.id";
+                sql += " INNER JOIN domicilios d ON p.id_domicilio=d.id INNER JOIN barrios b ON d.id_barrio=b.id";
+                sql += " INNER JOIN sexo s ON s.id=p.id_sexo INNER JOIN localidades l ON l.id=b.id_localidad WHERE p.vigente=1 and r.nombre='Cliente' and p.dni=@Dni;";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                cmd.Parameters.AddWithValue("@Dni", dni);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    cli.Id = (int)dr["id"];
+                    cli.Fecha_nacimiento = (DateTime)dr["fecha_nacimiento"];
+                    cli.Nombre = dr["nombre"].ToString();
+                    cli.Apellido = dr["apellido"].ToString();
+                    cli.Dni = (long)dr["dni"];
+                    user.Username = dr["username"].ToString();
+                    user.Id = (int)dr["userid"];
+                    sexo.Nombre = dr["sexo"].ToString();
+                    cli.Telefono = dr["telefono"].ToString();
+                    cli.Email = dr["email"].ToString();
+                    dom.Calle = dr["calle"].ToString();
+                    dom.Numero = dr["numero"].ToString();
+                    dom.Id = (int)dr["domicilioid"];
+                    bar.Nombre = dr["barrio"].ToString();
+                    loc.Nombre = dr["localidad"].ToString();
+                    bar.Localidad = loc;
+                    dom.Barrio = bar;
+                    cli.Domicilio = dom;
+                    cli.Sexo = sexo;
+                    cli.Usuario = user;        
+
+                }
+
+                dr.Close();
+            }
+
+
+
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+
+            return cli;
+        }
+
     }
 }

@@ -42,6 +42,34 @@ namespace daos
 
         }
 
+        public static void actualizarDomicilio(Domicilio dom, SqlConnection con, SqlTransaction tran)
+        {
+            SqlConnection cn = con;
+
+            try
+            {
+
+                string sql = "UPDATE domicilios SET calle=@Calle,numero=@Numero,id_barrio=@IdBarrio WHERE id=@Id";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = cn;
+                cmd.Transaction = tran;
+                cmd.Parameters.AddWithValue("@Calle", dom.Calle);
+                cmd.Parameters.AddWithValue("@Numero", dom.Numero);
+                cmd.Parameters.AddWithValue("@IdBarrio", dom.Barrio.Id);
+                cmd.Parameters.AddWithValue("@Id", dom.Id);
+
+                cmd.ExecuteNonQuery();
+
+
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al insertar cliente." + ex.Message);
+            }
+
+        }
+
         public static List<Localidad> listarLocalidades()
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;

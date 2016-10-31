@@ -13,6 +13,15 @@ namespace creamtime.Account {
     public partial class Login {
         
         /// <summary>
+        /// lbl_warning control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_warning;
+        
+        /// <summary>
         /// ErrorMessage control.
         /// </summary>
         /// <remarks>

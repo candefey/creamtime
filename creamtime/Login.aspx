@@ -2,14 +2,37 @@
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+        <script>  
+    $(document).ready(function () {
+
+        setTimeout(function () {
+            $(".alert").fadeIn();
+            $(".alert").fadeTo(250, 0).slideUp(250, function () {
+                $(this).remove();
+            });
+        }, 2500);
+    }); 
+</script>
+
+
+
     <h2><%: Title %>.</h2>
 
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
                 <div class="form-horizontal">
+
+                          
+
                     <h4>Utiliza tu cuenta para ingresar a la pagina.</h4>
-                    <hr />
+                    
+                    <div class="row">
+                      <strong>
+                        <asp:Label ID="lbl_warning" class="alert alert-warning" runat="server" Text=""></asp:Label>
+                        </strong>
+                        </div>
+
                     <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                         <p class="text-danger">
                             <asp:Literal runat="server" ID="FailureText" />
