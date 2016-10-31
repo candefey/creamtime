@@ -40,6 +40,24 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.Label lbl_warning;
         
         /// <summary>
+        /// Control ti_new.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ti_new;
+        
+        /// <summary>
+        /// Control ti_update.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ti_update;
+        
+        /// <summary>
         /// Control validator_razon_social.
         /// </summary>
         /// <remarks>

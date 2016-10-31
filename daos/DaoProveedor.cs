@@ -209,7 +209,6 @@ namespace daos
                     cmd.Parameters.Add(new SqlParameter("@num", p.Domicilio.Numero));
                     cmd.Parameters.Add(new SqlParameter("@idB", p.Domicilio.Barrio.Id));
                     cmd.Parameters.Add(new SqlParameter("@idL", p.Domicilio.Barrio.Localidad.Id));
-
                     cmd.Parameters.Add(new SqlParameter("@cuit", p.Cuit));
                    
                     cmd.ExecuteNonQuery();

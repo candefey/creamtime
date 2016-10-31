@@ -14,11 +14,15 @@ namespace creamtime
         protected void Page_Load(object sender, EventArgs e)
         {
             this.cargarGrilla();
+            ti_update.Visible = false;
+            btn_proveedor_actualizar.Visible = false;
             if (!Page.IsPostBack)
             {
                 lbl_error.Visible = false;
                 lbl_success.Visible = false;
                 lbl_warning.Visible = false;
+                ti_new.Visible = true;
+                ti_update.Visible = false;
 
 
                 //Por defecto carga Cordoba como Localidad con sus Barrios
@@ -35,7 +39,7 @@ namespace creamtime
                 combo_proveedor_barrio.DataBind();
 
                 cargarGrilla();
-                
+
             }
         }
         protected void combo_proveedor_localidad_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,77 +154,131 @@ namespace creamtime
                     txt_razon.Text = "";
 
                 }
-                
 
-                }
+
+            }
         }
 
         protected void cargarGrilla()
         {
 
             grillaProveedores.DataSource = GestorProveedor.listarProveedores();
-            string[] keys = new string[] {"Cuit"};
+            string[] keys = new string[] { "Cuit" };
             grillaProveedores.DataKeyNames = keys;
             grillaProveedores.DataBind();
 
         }
-        
+
 
         protected void grillaProveedores_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "actualizar")
-            {
-
-                //ACTUALIZO
-            }
-            if (e.CommandName == "eliminar")
-            {
-                //ELIMINO
-
-                //RECUPERO DATA KEY
-                String cuit= grillaProveedores.DataKeys[0].Value.ToString();
+                ti_update.Visible = true;
+                ti_new.Visible = false;
+                btn_proveedor_actualizar.Visible = true;
+                btn_proveedor_registrar.Visible = false;
+                 int index= e.CommandArgument.GetHashCode();
+                String cuit = grillaProveedores.DataKeys[Convert.ToInt32(e.CommandArgument)].Value.ToString();
                 Int64 cuitint = Convert.ToInt64(cuit);
-                GestorProveedor.eliminarProveedor(cuitint);
-            }
+                Proveedor p = GestorProveedor.buscarProveedor(cuitint);
+                txt_cuit.Text = "" + p.Cuit;
+                txt_cuit.Enabled = false;
+                txt_proveedor_domicilio.Text = "" + p.Domicilio.Calle;
+                txt_proveedor_numero.Text = "" + p.Domicilio.Numero;
+                txt_proveedor_telefono.Text = "" + p.Telefono;
+                txt_proveedor_email.Text = "" + p.Email;
+                txt_razon.Text = "" + p.RazonSocial;
+
+                string barrio = p.Domicilio.Barrio.Nombre;
+                combo_proveedor_barrio.SelectedItem.Text = barrio;
+                string localidad = p.Domicilio.Barrio.Localidad.Nombre;
+                combo_proveedor_localidad.SelectedItem.Text = localidad;
+            
         }
 
-        protected void grillaProveedores_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            String cuit = grillaProveedores.DataKeys[0].Value.ToString();
-            Int64 cuitint = Convert.ToInt64(cuit);
-            GestorProveedor.eliminarProveedor(cuitint);
-        }
-
+      
         protected void grillaProveedores_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            String cuit = grillaProveedores.DataKeys[0].Value.ToString();
+            String cuit = grillaProveedores.DataKeys[Convert.ToInt32(e.RowIndex)].Value.ToString();
             Int64 cuitint = Convert.ToInt64(cuit);
             GestorProveedor.eliminarProveedor(cuitint);
             cargarGrilla();
         }
 
-        protected void grillaProveedores_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            String cuit = grillaProveedores.DataKeys[0].Value.ToString();
-            Int64 cuitint = Convert.ToInt64(cuit);
-            Proveedor p = GestorProveedor.buscarProveedor(cuitint);
-
-            txt_cuit.Text = "" + p.Cuit;
-            txt_cuit.Enabled = false;
-            txt_proveedor_domicilio.Text = "" + p.Domicilio.Calle;
-            txt_proveedor_numero.Text = "" + p.Domicilio.Numero;
-            txt_proveedor_telefono.Text = "" + p.Telefono;
-            txt_proveedor_email.Text = "" + p.Email;
-            txt_razon.Text = "" + p.RazonSocial;
-            string barrio = p.Domicilio.Barrio.Nombre;
-            combo_proveedor_barrio.SelectedItem.Text = barrio;
-            string localidad= p.Domicilio.Barrio.Localidad.Nombre;
-            combo_proveedor_localidad.SelectedItem.Text = localidad;
-        }
-
+    
         protected void btn_proveedor_actualizar_Click(object sender, EventArgs e)
         {
+            ti_new.Visible = true;
+            ti_update.Visible = false;
+            btn_proveedor_registrar.Visible = true;
+            btn_proveedor_actualizar.Visible = false;
 
+
+            if (Page.IsValid)
+            {
+                try
+                {
+
+                    if (txt_razon.Text != "" && txt_cuit.Text != "" && txt_proveedor_domicilio.Text != "" &&
+                        txt_proveedor_email.Text != "" && txt_proveedor_telefono.Text != "")
+                    {
+
+                        Proveedor nuevo_pro = new Proveedor();
+                        nuevo_pro.RazonSocial = txt_razon.Text;
+                        Int64 cuit = Convert.ToInt64(txt_cuit.Text);
+                        
+                        nuevo_pro.Email = txt_proveedor_email.Text;
+                        nuevo_pro.Telefono = txt_proveedor_telefono.Text;
+                        Sexo sexo = new Sexo();
+                        Localidad loc = new Localidad();
+                        Barrio bar = new Barrio();
+                        Domicilio dom = new Domicilio();
+
+                        loc.Id = Convert.ToInt32(combo_proveedor_localidad.SelectedValue);
+                        loc.Nombre = combo_proveedor_localidad.SelectedItem.Text;
+
+                        bar.Localidad = loc;
+                        bar.Id = Convert.ToInt32(combo_proveedor_barrio.SelectedValue);
+                        bar.Nombre = combo_proveedor_barrio.SelectedItem.Text;
+
+                        dom.Barrio = bar;
+                        dom.Calle = txt_proveedor_domicilio.Text;
+                        dom.Numero = txt_proveedor_numero.Text;
+
+                        nuevo_pro.Domicilio = dom;
+                        nuevo_pro.FechaDeAlta = DateTime.Now;
+                        Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
+                        lbl_success.Text = "Proveedor actualizado con éxito!";
+                        lbl_success.Visible = true;
+                        lbl_error.Visible = false;
+                        lbl_warning.Visible = false;
+                        GestorProveedor.actualizarProveedor(nuevo_pro);
+                        this.cargarGrilla();
+
+                    }
+                    else
+                    {
+                        lbl_warning.Text = "Ha dejado campos vacíos en el formulario de modificación";
+                        lbl_warning.Visible = true;
+
+                    }
+                } 
+                
+                catch (Exception ex)
+                {
+                    lbl_error.Text = "Ha surgido un error en la creación del proveedor" + ex;
+                    lbl_error.Visible = true;
+                    lbl_success.Visible = false;
+                    lbl_warning.Visible = false;
+                    txt_cuit.Text = "";
+                    txt_proveedor_domicilio.Text = "";
+                    txt_proveedor_numero.Text = "";
+                    txt_proveedor_telefono.Text = "";
+                    txt_proveedor_email.Text = "";
+                    txt_razon.Text = "";
+
+                }
+
+            }
         }
     }
 }

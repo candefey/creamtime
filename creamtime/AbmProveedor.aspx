@@ -14,7 +14,9 @@
         <div class="col-lg-4">
     <div class="panel panel-default">
        <div class="panel-heading">
-       <h4>Registro de Nuevo Proveedor</h4>
+        <asp:Label Text="Registro de Nuevo Proveedor" runat="server" ID="ti_new"></asp:Label>
+        <asp:Label Text="Modificación Datos Proveedor" runat="server" ID="ti_update"></asp:Label>
+
         <h5 id="lbl_fecha_alta"></h5>
     </div>
      <div class="panel-body">
@@ -100,14 +102,14 @@
         <h4>Listado de Proveedores</h4>
         </div>
          <div class="panel-body table-responsive"">
-                <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaProveedores" runat="server" AutoGenerateColumns="False" OnRowCommand="grillaProveedores_RowCommand" OnRowDeleting="grillaProveedores_RowDeleting" OnSelectedIndexChanged="grillaProveedores_SelectedIndexChanged" OnRowEditing="grillaProveedores_RowEditing">
+                <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaProveedores" runat="server" AutoGenerateColumns="False" OnRowCommand="grillaProveedores_RowCommand" OnRowDeleting="grillaProveedores_RowDeleting" >
                     <Columns>
                         <asp:BoundField DataField="RazonSocial" HeaderText="Razon Social" />
                         <asp:BoundField DataField="Cuit" HeaderText="Cuit" />
                         <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
                         <asp:BoundField DataField="Email" HeaderText="Email" />
                         <asp:CommandField CausesValidation="False" ShowDeleteButton="True" />
-                        <asp:CommandField ShowEditButton="True" />
+                        <asp:CommandField ShowSelectButton="True" />
                     </Columns>
                 </asp:GridView>
                   
