@@ -15,7 +15,7 @@
                 $(this).remove();
             });
         }, 2500);
-    }); 
+
 
         $('#txt_cliente_fecha_nac').datepicker(
   {
@@ -25,8 +25,7 @@
       yearRange: '1925:2100',
       maxDate: '-18Y',
   });
-
-    }); 
+    });
 </script>  
         <br/>
         <strong>

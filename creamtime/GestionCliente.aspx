@@ -2,8 +2,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     <link href="Scripts/jquery-ui-1.12/jquery-ui-datepicker.css" rel="stylesheet" />  
-<script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script>  
-<script>  
+<script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script> 
+ 
+    <script>
     $(document).ready(function () {
 
         setTimeout(function () {
@@ -12,15 +13,15 @@
                 $(this).remove();
             });
         }, 2500);
-    }); 
 
-      $('#txt_cliente_fecha_nac').datepicker({
-      dateFormat: 'dd/mm/yy',
-      changeMonth: true,
-      changeYear: true,
-      yearRange: '1925:2100',
-      maxDate: '-18Y',
-  });
+        $('#MainContent_txt_cliente_fecha_nacim').datepicker(
+   {
+       dateFormat: 'dd/mm/yy',
+       changeMonth: true,
+       changeYear: true,
+       yearRange: '1925:2100',
+   });
+
 
     }); 
 </script>
