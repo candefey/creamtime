@@ -192,26 +192,39 @@ namespace daos
             {
                 string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
                 SqlConnection con = new SqlConnection();
+                SqlTransaction tran = null;
                 try
                 {
                     con.ConnectionString = cadenaConexion;
                     con.Open();
-                    string sql = "UPDATE proveedores P SET P.razon_social=@RS, P.vigente=@vigente, P.telefono=@tel, P.email=@email, D.calle=@calle, D.numero=@num, D.id_barrio=@idB, B.id_localidad=@idL INNER JOIN domicilios D ON P.id_domicilio=D.id INNER JOIN barrios B ON B.id = D.id_barrio INNER JOIN localidades L ON L.id = B.id_localidad WHERE cuit=@cuit";
+                    tran = con.BeginTransaction();
+                   
+                    string sql = "UPDATE proveedores SET proveedores.razon_social=@RS, proveedores.vigente=@vigente, proveedores.telefono=@tel, proveedores.email=@email WHERE cuit=@cuit";
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = sql;
                     cmd.Connection = con;
-                                        
+                    cmd.Transaction = tran;                   
                     cmd.Parameters.Add(new SqlParameter("@RS", p.RazonSocial));
                     cmd.Parameters.Add(new SqlParameter("@vigente", p.Vigente));
                     cmd.Parameters.Add(new SqlParameter("@tel", p.Telefono));
                     cmd.Parameters.Add(new SqlParameter("@email", p.Email));
-                    cmd.Parameters.Add(new SqlParameter("@calle", p.Domicilio.Calle));
-                    cmd.Parameters.Add(new SqlParameter("@num", p.Domicilio.Numero));
-                    cmd.Parameters.Add(new SqlParameter("@idB", p.Domicilio.Barrio.Id));
-                    cmd.Parameters.Add(new SqlParameter("@idL", p.Domicilio.Barrio.Localidad.Id));
                     cmd.Parameters.Add(new SqlParameter("@cuit", p.Cuit));
-                   
                     cmd.ExecuteNonQuery();
+
+
+                    string sql2 = "UPDATE domicilios SET domicilios.calle=@calle, domicilios.numero=@num, domicilios.id_barrio=@idB WHERE domicilios.id=@idDom";
+                    SqlCommand cmd2 = new SqlCommand();
+                    cmd2.CommandText = sql2;
+                    cmd.Connection = con;
+                    cmd.Transaction = tran;
+                    cmd2.Parameters.Add(new SqlParameter("@calle", p.Domicilio.Calle));
+                    cmd2.Parameters.Add(new SqlParameter("@num", p.Domicilio.Numero));
+                    cmd2.Parameters.Add(new SqlParameter("@idB", p.Domicilio.Barrio.Id));
+                    cmd2.Parameters.Add(new SqlParameter("@idDom", p.Domicilio.Id));
+                    cmd.ExecuteNonQuery();
+
+                    tran.Commit();
+                    
 
                 }
                 catch (SqlException ex)

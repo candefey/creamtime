@@ -58,6 +58,33 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.Label ti_update;
         
         /// <summary>
+        /// Control lbl_fecha_de_modif.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_fecha_de_modif;
+        
+        /// <summary>
+        /// Control lbl_titulo_fecha_alta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_titulo_fecha_alta;
+        
+        /// <summary>
+        /// Control lbl_fecha_de_alta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_fecha_de_alta;
+        
+        /// <summary>
         /// Control validator_razon_social.
         /// </summary>
         /// <remarks>
@@ -191,6 +218,15 @@ namespace creamtime {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_proveedor_numero;
+        
+        /// <summary>
+        /// Control check_vigente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox check_vigente;
         
         /// <summary>
         /// Control btn_proveedor_registrar.

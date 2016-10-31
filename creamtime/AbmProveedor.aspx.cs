@@ -13,30 +13,37 @@ namespace creamtime
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.cargarGrilla();
-            ti_update.Visible = false;
-            btn_proveedor_actualizar.Visible = false;
+            combo_proveedor_localidad.ClearSelection();
+            combo_proveedor_barrio.ClearSelection();
             if (!Page.IsPostBack)
             {
                 lbl_error.Visible = false;
                 lbl_success.Visible = false;
                 lbl_warning.Visible = false;
+                lbl_fecha_de_modif.Visible = false;
+                
+                lbl_titulo_fecha_alta.Visible = false;
+                lbl_fecha_de_alta.Visible = false;
                 ti_new.Visible = true;
                 ti_update.Visible = false;
-
-
+                check_vigente.Checked = false;
+                btn_proveedor_actualizar.Visible = false;
                 //Por defecto carga Cordoba como Localidad con sus Barrios
                 List<Localidad> localidades = GestorProveedor.listarLocalidades();
                 combo_proveedor_localidad.DataSource = localidades;
                 combo_proveedor_localidad.DataTextField = "Nombre";
-                combo_proveedor_localidad.DataValueField = "Id";
+                combo_proveedor_localidad.DataValueField = "Id";                
                 combo_proveedor_localidad.DataBind();
+                combo_proveedor_localidad.Items.Add("Sin selección");
+                combo_proveedor_localidad.Items.FindByText("Sin selección").Selected = true;
 
                 Localidad cba = localidades.Find(Localidad => Localidad.Nombre == "Cordoba");
                 combo_proveedor_barrio.DataSource = GestorProveedor.listarBarrios(cba.Id);
                 combo_proveedor_barrio.DataTextField = "Nombre";
                 combo_proveedor_barrio.DataValueField = "Id";
                 combo_proveedor_barrio.DataBind();
+                combo_proveedor_barrio.Items.Add("Sin selección");
+                combo_proveedor_barrio.Items.FindByText("Sin selección").Selected = true;
 
                 cargarGrilla();
 
@@ -67,6 +74,10 @@ namespace creamtime
                     {
 
                         Proveedor nuevo_pro = new Proveedor();
+                        if (check_vigente.Checked)
+                            nuevo_pro.Vigente = 1;
+                        else
+                            nuevo_pro.Vigente = 0;
                         nuevo_pro.RazonSocial = txt_razon.Text;
                         Int64 cuit = Convert.ToInt64(txt_cuit.Text);
                         if ((txt_cuit.Text.Length == 10 || txt_cuit.Text.Length == 11))
@@ -176,7 +187,7 @@ namespace creamtime
                 ti_new.Visible = false;
                 btn_proveedor_actualizar.Visible = true;
                 btn_proveedor_registrar.Visible = false;
-                 int index= e.CommandArgument.GetHashCode();
+                int index= e.CommandArgument.GetHashCode();
                 String cuit = grillaProveedores.DataKeys[Convert.ToInt32(e.CommandArgument)].Value.ToString();
                 Int64 cuitint = Convert.ToInt64(cuit);
                 Proveedor p = GestorProveedor.buscarProveedor(cuitint);
@@ -187,11 +198,19 @@ namespace creamtime
                 txt_proveedor_telefono.Text = "" + p.Telefono;
                 txt_proveedor_email.Text = "" + p.Email;
                 txt_razon.Text = "" + p.RazonSocial;
-
-                string barrio = p.Domicilio.Barrio.Nombre;
-                combo_proveedor_barrio.SelectedItem.Text = barrio;
-                string localidad = p.Domicilio.Barrio.Localidad.Nombre;
-                combo_proveedor_localidad.SelectedItem.Text = localidad;
+            
+            if (p.Vigente == 0)
+                check_vigente.Checked = false;
+            else
+                check_vigente.Checked = true;
+            combo_proveedor_localidad.ClearSelection();
+            combo_proveedor_barrio.ClearSelection();
+            combo_proveedor_barrio.Items.FindByText(p.Domicilio.Barrio.Nombre).Selected = true;
+            combo_proveedor_localidad.Items.FindByText(p.Domicilio.Barrio.Localidad.Nombre).Selected = true;
+            lbl_fecha_de_alta.Visible = true;   
+            lbl_fecha_de_alta.Text = Convert.ToString(p.FechaDeAlta.ToShortDateString());
+            lbl_titulo_fecha_alta.Visible = true;
+            
             
         }
 
@@ -224,8 +243,12 @@ namespace creamtime
 
                         Proveedor nuevo_pro = new Proveedor();
                         nuevo_pro.RazonSocial = txt_razon.Text;
+                        if (check_vigente.Checked)
+                            nuevo_pro.Vigente = 1;
+                        else
+                            nuevo_pro.Vigente = 0;
                         Int64 cuit = Convert.ToInt64(txt_cuit.Text);
-                        
+                        nuevo_pro.Cuit = cuit;
                         nuevo_pro.Email = txt_proveedor_email.Text;
                         nuevo_pro.Telefono = txt_proveedor_telefono.Text;
                         Sexo sexo = new Sexo();
@@ -247,11 +270,22 @@ namespace creamtime
                         nuevo_pro.Domicilio = dom;
                         nuevo_pro.FechaDeAlta = DateTime.Now;
                         Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
+                        GestorProveedor.actualizarProveedor(nuevo_pro);
                         lbl_success.Text = "Proveedor actualizado con éxito!";
                         lbl_success.Visible = true;
                         lbl_error.Visible = false;
                         lbl_warning.Visible = false;
-                        GestorProveedor.actualizarProveedor(nuevo_pro);
+                        lbl_fecha_de_modif.Visible = false;
+                        txt_cuit.Text = "";
+                        txt_proveedor_domicilio.Text = "";
+                        txt_proveedor_numero.Text = "";
+                        txt_proveedor_telefono.Text = "";
+                        txt_proveedor_email.Text = "";
+                        txt_razon.Text = "";
+                        combo_proveedor_localidad.ClearSelection();
+                        combo_proveedor_barrio.ClearSelection();
+                        combo_proveedor_localidad.Items.FindByText("Sin selección").Selected = true;
+                        combo_proveedor_barrio.Items.FindByText("Sin selección").Selected = true;                        
                         this.cargarGrilla();
 
                     }
@@ -265,7 +299,7 @@ namespace creamtime
                 
                 catch (Exception ex)
                 {
-                    lbl_error.Text = "Ha surgido un error en la creación del proveedor" + ex;
+                    lbl_error.Text = "Ha surgido un error en la modificación del proveedor" + ex;
                     lbl_error.Visible = true;
                     lbl_success.Visible = false;
                     lbl_warning.Visible = false;
@@ -275,6 +309,11 @@ namespace creamtime
                     txt_proveedor_telefono.Text = "";
                     txt_proveedor_email.Text = "";
                     txt_razon.Text = "";
+
+                    combo_proveedor_localidad.ClearSelection();
+                    combo_proveedor_barrio.ClearSelection();
+                    combo_proveedor_localidad.Items.FindByText("Sin selección").Selected = true;
+                    combo_proveedor_barrio.Items.FindByText("Sin selección").Selected = true;
 
                 }
 

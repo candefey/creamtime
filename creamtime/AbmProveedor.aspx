@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script src="/Scripts/Proveedor/abmProveedor.js"" type="text/javascript"></script>
     <br />
-    <div class="row">             
+    <div class="row" id="labels" style="display:block;">             
     <strong>
         <asp:Label ID="lbl_success" class="alert alert-success" runat="server" Text=""></asp:Label>
         <asp:Label ID="lbl_error" class="alert alert-danger" runat="server" Text=""></asp:Label>
@@ -14,10 +14,13 @@
         <div class="col-lg-4">
     <div class="panel panel-default">
        <div class="panel-heading">
-        <asp:Label Text="Registro de Nuevo Proveedor" runat="server" ID="ti_new"></asp:Label>
-        <asp:Label Text="Modificación Datos Proveedor" runat="server" ID="ti_update"></asp:Label>
+        <asp:Label Font-Size="Medium" Text="Registro de Nuevo Proveedor" runat="server" ID="ti_new"></asp:Label>
+        <asp:Label  Font-Size="Medium" Text="Modificación Datos Proveedor" runat="server" ID="ti_update"></asp:Label>
+        <asp:Label Text="Fecha de Modificación:" runat="server" ID="lbl_fecha_de_modif"></asp:Label>
+        <h5 id="lbl_fecha_actual"></h5>
 
-        <h5 id="lbl_fecha_alta"></h5>
+        <asp:Label Text="Fecha de Alta: " runat="server" ID="lbl_titulo_fecha_alta"></asp:Label>
+        <asp:Label runat="server" ID="lbl_fecha_de_alta"></asp:Label>
     </div>
      <div class="panel-body">
     
@@ -88,6 +91,10 @@
     <div class="form-group">
         <asp:TextBox placeholder="Numero o Departamento" class="form-control" ID="txt_proveedor_numero" runat="server"></asp:TextBox>
         <small id="numeroHelp" class="form-text text-muted">1212, Depto:8 'A'</small>
+    
+    </div>
+     <div class="form-group">
+         <asp:CheckBox ID="check_vigente" runat="server" Text="Vigente" />    
     </div>
            <asp:Button ID="btn_proveedor_registrar" class="btn btn-info" runat="server" Text="Registrar" OnClick="btn_proveedor_registrar_Click" />
          <asp:Button ID="btn_proveedor_actualizar" class="btn btn-info" runat="server" Text="Actualizar" OnClick="btn_proveedor_actualizar_Click"/>
