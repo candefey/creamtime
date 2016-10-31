@@ -87,7 +87,7 @@ namespace daos
 
                     dom.Id = (int)reader["iddom"];
                     dom.Calle = (string)reader["calledom"];
-                    dom.Numero = ""+ (int)reader["numdom"];
+                    dom.Numero = reader["numdom"].ToString();
                     dom.Barrio = barrio;
 
                     p.Id = (int)reader["id"];
@@ -276,7 +276,7 @@ namespace daos
 
                     dom.Id = (int)reader["iddom"];
                     dom.Calle = (string)reader["calledom"];
-                    dom.Numero = "" + (int)reader["numdom"];
+                    dom.Numero = reader["numdom"].ToString();
                     dom.Barrio = barrio;
 
                     p.Id = (int)reader["id"];
