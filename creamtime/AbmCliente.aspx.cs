@@ -59,6 +59,10 @@ namespace creamtime
 
         protected void btn_cliente_registrar_Click(object sender, EventArgs e)
         {
+            lbl_error.Visible = false;
+            lbl_success.Visible = false;
+            lbl_warning.Visible = false;
+
             if (Page.IsValid)
             {
                 try

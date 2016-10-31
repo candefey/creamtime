@@ -57,6 +57,34 @@ namespace daos
 
         }
 
+        public static void actualizarUsuario(Usuario user, SqlConnection con, SqlTransaction tran, int id_cliente)
+        {
+
+            SqlConnection cn = con;
+            try
+            {
+
+               string sql = "UPDATE usuarios SET username=@Username WHERE id_persona=@IdCliente;";
+                
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = cn;
+                cmd.Transaction = tran;
+                cmd.Parameters.AddWithValue("@Username", user.Username);
+                cmd.Parameters.AddWithValue("@IdCliente", id_cliente);
+
+                cmd.ExecuteNonQuery();
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error al insertar cliente." + ex.Message);
+            }
+
+        }
+
         public static Usuario existeUsuario(Usuario usuario)
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;

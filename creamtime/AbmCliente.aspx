@@ -7,17 +7,26 @@
 <link href="Scripts/jquery-ui-1.12/jquery-ui-datepicker.css" rel="stylesheet" />  
 <script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script> 
 <script>  
-$(function ()  
-{  
-    $('#txt_cliente_fecha_nac').datepicker(  
-    {  
-        dateFormat: 'dd/mm/yy',  
-        changeMonth: true,  
-        changeYear: true,  
-        yearRange: '1925:2100',
-        maxDate: '-18Y',
-    });  
-})  
+    $(document).ready(function () {
+
+        setTimeout(function () {
+            $(".alert").fadeIn();
+            $(".alert").fadeTo(250, 0).slideUp(250, function () {
+                $(this).remove();
+            });
+        }, 2500);
+    }); 
+
+        $('#txt_cliente_fecha_nac').datepicker(
+  {
+      dateFormat: 'dd/mm/yy',
+      changeMonth: true,
+      changeYear: true,
+      yearRange: '1925:2100',
+      maxDate: '-18Y',
+  });
+
+    }); 
 </script>  
         <br/>
         <strong>
