@@ -7,13 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace creamtime
-{
-
-
-    public partial class AbmProveedor
-    {
-
+namespace creamtime {
+    
+    
+    public partial class AbmProveedor {
+        
         /// <summary>
         /// Control lbl_success.
         /// </summary>
@@ -22,7 +20,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_success;
-
+        
         /// <summary>
         /// Control lbl_error.
         /// </summary>
@@ -31,7 +29,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_error;
-
+        
         /// <summary>
         /// Control lbl_warning.
         /// </summary>
@@ -40,7 +38,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_warning;
-
+        
         /// <summary>
         /// Control ti_new.
         /// </summary>
@@ -49,7 +47,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ti_new;
-
+        
         /// <summary>
         /// Control ti_update.
         /// </summary>
@@ -58,7 +56,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ti_update;
-
+        
         /// <summary>
         /// Control lbl_fecha_de_modif.
         /// </summary>
@@ -67,7 +65,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_fecha_de_modif;
-
+        
         /// <summary>
         /// Control lbl_titulo_fecha_alta.
         /// </summary>
@@ -76,7 +74,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_titulo_fecha_alta;
-
+        
         /// <summary>
         /// Control lbl_fecha_de_alta.
         /// </summary>
@@ -85,7 +83,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_fecha_de_alta;
-
+        
         /// <summary>
         /// Control validator_razon_social.
         /// </summary>
@@ -94,7 +92,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_razon_social;
-
+        
         /// <summary>
         /// Control validator_razon_compare.
         /// </summary>
@@ -103,7 +101,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CompareValidator validator_razon_compare;
-
+        
         /// <summary>
         /// Control txt_razon.
         /// </summary>
@@ -112,7 +110,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_razon;
-
+        
         /// <summary>
         /// Control validator_cuit.
         /// </summary>
@@ -121,7 +119,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_cuit;
-
+        
         /// <summary>
         /// Control txt_cuit.
         /// </summary>
@@ -130,7 +128,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_cuit;
-
+        
         /// <summary>
         /// Control validator_proveedor_telefono.
         /// </summary>
@@ -139,7 +137,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_proveedor_telefono;
-
+        
         /// <summary>
         /// Control validator_regex_proveedor_telefono.
         /// </summary>
@@ -148,7 +146,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator validator_regex_proveedor_telefono;
-
+        
         /// <summary>
         /// Control txt_proveedor_telefono.
         /// </summary>
@@ -157,7 +155,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_proveedor_telefono;
-
+        
         /// <summary>
         /// Control validator_proveedor_email.
         /// </summary>
@@ -166,7 +164,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator validator_proveedor_email;
-
+        
         /// <summary>
         /// Control validator_regex_proveedor_email.
         /// </summary>
@@ -175,7 +173,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator validator_regex_proveedor_email;
-
+        
         /// <summary>
         /// Control txt_proveedor_email.
         /// </summary>
@@ -184,7 +182,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_proveedor_email;
-
+        
         /// <summary>
         /// Control combo_proveedor_localidad.
         /// </summary>
@@ -193,7 +191,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList combo_proveedor_localidad;
-
+        
         /// <summary>
         /// Control combo_proveedor_barrio.
         /// </summary>
@@ -202,7 +200,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList combo_proveedor_barrio;
-
+        
         /// <summary>
         /// Control txt_proveedor_domicilio.
         /// </summary>
@@ -211,7 +209,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_proveedor_domicilio;
-
+        
         /// <summary>
         /// Control txt_proveedor_numero.
         /// </summary>
@@ -220,7 +218,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_proveedor_numero;
-
+        
         /// <summary>
         /// Control check_vigente.
         /// </summary>
@@ -229,7 +227,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox check_vigente;
-
+        
         /// <summary>
         /// Control btn_proveedor_registrar.
         /// </summary>
@@ -238,7 +236,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_proveedor_registrar;
-
+        
         /// <summary>
         /// Control btn_proveedor_actualizar.
         /// </summary>
@@ -247,7 +245,7 @@ namespace creamtime
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_proveedor_actualizar;
-
+        
         /// <summary>
         /// Control grillaProveedores.
         /// </summary>

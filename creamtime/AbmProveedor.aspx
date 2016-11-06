@@ -3,15 +3,18 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script src="/Scripts/Proveedor/abmProveedor.js"" type="text/javascript"></script>
     <br />
-    <div class="row" id="labels" style="display:block;">             
+     <div class="panel-body">
+     <div class="row" id="labels" style="display:block;">             
     <strong>
         <asp:Label ID="lbl_success" class="alert alert-success" runat="server" Text=""></asp:Label>
         <asp:Label ID="lbl_error" class="alert alert-danger" runat="server" Text=""></asp:Label>
         <asp:Label ID="lbl_warning" class="alert alert-warning" runat="server" Text=""></asp:Label>
     </strong>
     </div> 
+
     <div class="row" style="display:block;">
-        <div class="col-lg-4">
+
+    <div class="col-lg-4">
     <div class="panel panel-default">
        <div class="panel-heading">
         <asp:Label Font-Size="Medium" Text="Registro de Nuevo Proveedor" runat="server" ID="ti_new"></asp:Label>
@@ -30,16 +33,24 @@
   <script>
   $( function() {
     $( document ).tooltip();
-  } );
-  </script>
+  });
+  $(document).ready(function () {
+
+      setTimeout(function () {
+          $(".alert").fadeIn();
+          $(".alert").fadeTo(250, 0).slideUp(250, function () {
+              $(this).remove();
+          });
+      }, 2500);
+  });
+</script>
   <style>
   title {
     display: inline-block;
     width: 5em;
   }
   </style>
-   
-  
+    
     
     <div class="form-group">
         <asp:RequiredFieldValidator ID="validator_razon_social" runat="server" ControlToValidate="txt_razon" ErrorMessage="*Este campo es obligatorio" Display="Dynamic" ForeColor="#CC3300" SetFocusOnError="True"></asp:RequiredFieldValidator>
@@ -124,5 +135,6 @@
      </div>
     </div>
  </div>
+         </div>
 
 </asp:Content>

@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="GestionCliente.aspx.cs" Inherits="creamtime.WebForm1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <link href="Scripts/jquery-ui-1.12/jquery-ui-datepicker.css" rel="stylesheet" />  
-<script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script>  
-<script>  
+ <link href="Scripts/jquery-ui-1.12/jquery-ui-datepicker.css" rel="stylesheet" />  
+<script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script> 
+ 
+    <script>
     $(document).ready(function () {
 
         setTimeout(function () {
@@ -12,45 +13,28 @@
                 $(this).remove();
             });
         }, 2500);
-    }); 
 
-      $('#txt_cliente_fecha_nac').datepicker({
-      dateFormat: 'dd/mm/yy',
-      changeMonth: true,
-      changeYear: true,
-      yearRange: '1925:2100',
-      maxDate: '-18Y',
-  });
+        $('#MainContent_txt_cliente_fecha_nacim').datepicker(
+   {
+       dateFormat: 'dd/mm/yy',
+       changeMonth: true,
+       changeYear: true,
+       yearRange: '1925:2100',
+   });
+
 
     }); 
 </script>
 
     <div class="panel-body">
-  
-    <div class="col-lg-8">
-     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4>Listado de Clientes</h4>
-            </div>
-         <div class="panel-body table-responsive"">
-    <asp:GridView ID="cliente_gridview" runat="server" CssClass="table table-striped table-bordered table-hover" Width="100%" OnRowCommand="cliente_gridview_RowCommand" OnRowDeleting="cliente_gridview_RowDeleting">
-        <Columns>
-            <asp:CommandField SelectText="Seleccionar" ShowSelectButton="True" />
-            <asp:CommandField DeleteText="Eliminar" ShowDeleteButton="True" />
-        </Columns>
-    </asp:GridView>
-             </div>
-         </div>
-        </div>
-
-        <strong>
-      <asp:Label ID="lbl_warning" class="alert alert-warning" runat="server" Text=""></asp:Label>
-        <asp:Label ID="lbl_success" class="alert alert-success" runat="server" Text=""></asp:Label>
+   <strong>
+    <asp:Label ID="lbl_warning" class="alert alert-warning" runat="server" Text=""></asp:Label>
+    <asp:Label ID="lbl_success" class="alert alert-success" runat="server" Text=""></asp:Label>
     <asp:Label ID="lbl_error" class="alert alert-danger" runat="server" Text=""></asp:Label>
-            </strong>
+    </strong>
 
-        <div class="row" style="display:block;">
-     <div class="col-lg-8">
+    <div class="row" style="display:block;">
+    <div class="col-lg-4">
     <div class="panel panel-default">
        <div class="panel-heading">
 
@@ -138,8 +122,24 @@
      </div>
         </div>
          </div>
-            </div>
+           
 
-        </div>
+            <div class="col-lg-8">
+                     <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Listado de Clientes</h4>
+                            </div>
+                             <div class="panel-body table-responsive"">
+                                <asp:GridView ID="cliente_gridview" runat="server" CssClass="table table-striped table-bordered table-hover" Width="100%" OnRowCommand="cliente_gridview_RowCommand" OnRowDeleting="cliente_gridview_RowDeleting">
+                                    <Columns>
+                                        <asp:CommandField SelectText="Seleccionar" ShowSelectButton="True" />
+                                        <asp:CommandField DeleteText="Eliminar" ShowDeleteButton="True" />
+                                    </Columns>
+                                </asp:GridView>
+                             </div>
+                     </div>
+            </div>
+         </div>
+    </div>
 
 </asp:Content>
