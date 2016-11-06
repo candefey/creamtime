@@ -45,7 +45,7 @@ $(function ()
             <div class="form-group">
                 <label>Tipo de Producto</label>
                 <div class="dropdown">
-                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="combo_tipo_producto" runat="server" AutoPostBack="True">
+                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="combo_tipo_producto" runat="server">
                 </asp:DropDownList>
                     </div>
             </div>

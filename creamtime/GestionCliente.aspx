@@ -125,6 +125,7 @@
            
 
             <div class="col-lg-8">
+                <div class="panel-boy">
                      <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>Listado de Clientes</h4>
@@ -138,6 +139,7 @@
                                 </asp:GridView>
                              </div>
                      </div>
+                    </div>
             </div>
          </div>
     </div>

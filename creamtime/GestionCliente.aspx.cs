@@ -175,15 +175,7 @@ namespace creamtime
                             }
                         }
 
-                        if (seleccionado.Nombre == nuevo_cli.Nombre && seleccionado.Apellido == nuevo_cli.Apellido
-                                && seleccionado.Fecha_nacimiento == nuevo_cli.Fecha_nacimiento && seleccionado.Email == nuevo_cli.Email
-                                && seleccionado.Telefono == nuevo_cli.Telefono)
-                        {
-                            lbl_warning.Text = "Debe realizar algun cambio para actualizar";
-                            lbl_warning.Visible = true;
-                        }
-                        else
-                        {
+
                             GestorCliente.actualizarCliente(nuevo_cli);
                             lbl_success.Text = "Cliente actualizado con exito!";
                             lbl_success.Visible = true;
@@ -202,7 +194,7 @@ namespace creamtime
                             txt_cliente_telefono.Text = "";
                             txt_cliente_domicilio.Text = "";
                             txt_usuario.Text = "";
-                        }
+                       
 
 
                     }
