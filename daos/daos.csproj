@@ -50,11 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DaoCliente.cs" />
+    <Compile Include="DaoDetallePedido.cs" />
     <Compile Include="DaoDomicilio.cs" />
+    <Compile Include="DaoPedido.cs" />
     <Compile Include="DaoProducto.cs" />
     <Compile Include="DaoProveedor.cs" />
     <Compile Include="DaoRol.cs" />
     <Compile Include="DaoSexo.cs" />
+    <Compile Include="DaoSubDetallePedido.cs" />
     <Compile Include="DaoTipoProducto.cs" />
     <Compile Include="DaoUsuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

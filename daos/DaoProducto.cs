@@ -33,20 +33,22 @@ namespace daos
 					                                      ,codigo_producto
 					                                      ,precio
 					                                      ,fecha_alta
-					                                      ,vigente)
+					                                      ,vigente
+                                                          ,agregados)
                                     VALUES (@Nombre
 	                                       ,@IdTipo
 	                                       ,@CodigoProducto
 	                                       ,@Precio
 	                                       ,@FechaAlta
-	                                       ,@Vigente)";
-
+	                                       ,@Vigente
+	                                       ,@Agregados)";     
                 cmd.Parameters.AddWithValue("@Nombre", producto.Nombre);
                 cmd.Parameters.AddWithValue("@IdTipo", producto.Tipo_Producto.Id);
                 cmd.Parameters.AddWithValue("@CodigoProducto", producto.Codigo_Producto);
                 cmd.Parameters.AddWithValue("@Precio", producto.Precio);
                 cmd.Parameters.AddWithValue("@FechaAlta", producto.Fecha_Alta);
                 cmd.Parameters.AddWithValue("@Vigente", producto.Vigente);
+                cmd.Parameters.AddWithValue("@Agregados", producto.Agregados);
 
                 //Inserto producto y commit a la transaccion
                 cmd.ExecuteNonQuery();
@@ -89,6 +91,7 @@ namespace daos
 	                                      ,prod.precio
 	                                      ,prod.fecha_alta
 	                                      ,prod.vigente
+                                          ,prod.agregados
 	                                      ,tpro.nombre AS 'NombreTipo'
                                       FROM productos prod INNER JOIN tipo_producto tpro
 	                                    ON prod.id_tipo = tpro.id
@@ -117,6 +120,8 @@ namespace daos
                     producto.Precio = float.Parse(dr["precio"].ToString());
                     producto.Fecha_Alta = (DateTime)dr["fecha_alta"];
                     producto.Vigente = (Boolean)dr["vigente"];
+                    if (dr["agregados"] != DBNull.Value)
+                        producto.Agregados = (int)dr["agregados"];
 
                     listaProductos.Add(producto);
                 }
@@ -208,6 +213,7 @@ namespace daos
 	                                      ,prod.precio
 	                                      ,prod.fecha_alta
 	                                      ,prod.vigente
+                                          ,prod.agregados
                                           ,tpro.nombre AS 'NombreTipo'
                                       FROM productos prod INNER JOIN tipo_producto tpro
 	                                    ON prod.id_tipo = tpro.id
@@ -235,6 +241,7 @@ namespace daos
                     producto.Precio = float.Parse(dr["precio"].ToString());
                     producto.Fecha_Alta = (DateTime)dr["fecha_alta"];
                     producto.Vigente = (Boolean)dr["vigente"];
+                    producto.Agregados = (int)dr["agregados"];
                 }
 
                 dr.Close();
@@ -334,6 +341,7 @@ namespace daos
                                               ,precio = @Precio
                                               ,fecha_alta = @Fecha
                                               ,vigente = @Vigente
+                                              ,agregados = @Agregados
                                          WHERE codigo_producto = @Codigo";
 
                     cmd.Parameters.AddWithValue("@Nombre", producto.Nombre);
@@ -341,6 +349,7 @@ namespace daos
                     cmd.Parameters.AddWithValue("@Precio", producto.Precio);
                     cmd.Parameters.AddWithValue("@Fecha", producto.Fecha_Alta);
                     cmd.Parameters.AddWithValue("@Vigente", producto.Vigente);
+                    cmd.Parameters.AddWithValue("@Agregados", producto.Agregados);
                     cmd.Parameters.AddWithValue("@Codigo", producto.Codigo_Producto);
 
                     //Modifica el producto y commit a la transaccion

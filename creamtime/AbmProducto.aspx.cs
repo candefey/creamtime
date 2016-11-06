@@ -86,6 +86,11 @@ namespace creamtime
 
                     producto.Tipo_Producto = tipo;
 
+                    if (!string.IsNullOrWhiteSpace(txt_agregados.Text))
+                        producto.Agregados = int.Parse(txt_agregados.Text);
+
+                    Debug.WriteLine(producto.Agregados);
+
                     producto.Codigo_Producto = codigo;
 
                     producto.Precio = float.Parse(txt_precio.Text);
@@ -160,6 +165,12 @@ namespace creamtime
 
             txt_producto_nombre.Text = "" + producto.Nombre;
             combo_tipo_producto.SelectedItem.Text = producto.Tipo_Producto.Nombre;
+
+            if (producto.Agregados.HasValue)
+                txt_agregados.Text = Convert.ToString(producto.Agregados);
+            else
+                txt_agregados.Text = "";
+
             txt_codigo_producto.Text = "" + producto.Codigo_Producto.ToString("D8");
             txt_precio.Text = "" + producto.Precio;
             txt_fecha_alta.Text = Convert.ToString(producto.Fecha_Alta.ToShortDateString());
@@ -186,6 +197,9 @@ namespace creamtime
                     tipo.Nombre = combo_tipo_producto.SelectedItem.Text;
 
                     producto.Tipo_Producto = tipo;
+
+                    if (!string.IsNullOrWhiteSpace(txt_agregados.Text))
+                        producto.Agregados = int.Parse(txt_agregados.Text);
 
                     int codigo = int.Parse(txt_codigo_producto.Text);
                     producto.Codigo_Producto = codigo;
@@ -228,6 +242,7 @@ namespace creamtime
         protected void limpiar()
         {
             txt_producto_nombre.Text = "";
+            txt_agregados.Text = "";
             txt_codigo_producto.Text = "";
             txt_precio.Text = "";
             txt_fecha_alta.Text = "";

@@ -5,7 +5,16 @@
 
 <link href="Scripts/jquery-ui-1.12/jquery-ui-datepicker.css" rel="stylesheet" />  
 <script src="Scripts/jquery-ui-1.12/jquery-ui.js"></script> 
-<script>  
+<script> 
+$(document).ready(function () {
+
+    setTimeout(function () {
+        $(".alert").fadeIn();
+        $(".alert").fadeTo(250, 0).slideUp(250, function () {
+            $(this).remove();
+        });
+    }, 2500);
+});
 $(function ()  
 {  
     $('#txt_fecha_alta').datepicker(
@@ -48,6 +57,10 @@ $(function ()
                 <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="combo_tipo_producto" runat="server" AutoPostBack="True">
                 </asp:DropDownList>
                     </div>
+            </div>
+
+            <div class="form-group">
+                <asp:TextBox placeholder="Agregados" class="form-control" ID="txt_agregados" runat="server"></asp:TextBox>                
             </div>
 
             <div class="form-group">
