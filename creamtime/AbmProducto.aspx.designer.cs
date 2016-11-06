@@ -67,6 +67,15 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.DropDownList combo_tipo_producto;
         
         /// <summary>
+        /// txt_agregados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_agregados;
+        
+        /// <summary>
         /// validator_codigo_producto control.
         /// </summary>
         /// <remarks>

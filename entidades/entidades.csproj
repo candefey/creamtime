@@ -48,11 +48,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ambito.cs" />
     <Compile Include="Barrio.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ClienteView.cs" />
+    <Compile Include="DetallePedido.cs" />
     <Compile Include="Domicilio.cs" />
+    <Compile Include="Envio.cs" />
+    <Compile Include="Estado.cs" />
     <Compile Include="Localidad.cs" />
+    <Compile Include="Pedido.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,6 +65,7 @@
     <Compile Include="ProveedorView.cs" />
     <Compile Include="Rol.cs" />
     <Compile Include="Sexo.cs" />
+    <Compile Include="SubDetallePedido.cs" />
     <Compile Include="TipoProducto.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GestorCliente.cs" />
+    <Compile Include="GestorPedido.cs" />
     <Compile Include="GestorProducto.cs" />
     <Compile Include="GestorProveedor.cs" />
     <Compile Include="GestorRol.cs" />

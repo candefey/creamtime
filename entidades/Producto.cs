@@ -15,5 +15,6 @@ namespace entidades
         public float Precio { get; set; }
         public DateTime Fecha_Alta { get; set; }
         public Boolean Vigente { get; set; }
+        public int? Agregados { get; set; }
     }
 }
