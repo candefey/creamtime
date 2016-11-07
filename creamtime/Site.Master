@@ -61,6 +61,17 @@
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">Acerca de Nosotros</a></li>
                         <li><a runat="server" href="~/Contact">Info de Contacto</a></li>
+                        
+                         <%                
+                         }
+                         %> 
+
+                             <%   
+                        if (Session["user"] != null && (String)Session["user_perm"]=="Cliente")
+                           {
+                        %>
+                        <li><a runat="server" href="~/RegistrarPedido">Registrar Pedido</a></li>  
+                        
                          <%                
                          }
                          %> 
@@ -89,7 +100,7 @@
                                        <li><a runat="server" href="~/AbmProducto">Productos</a></li>
                                        <li><a runat="server" href="~/RegistrarEnvio">Envios</a></li>
                                        <li><a runat="server" href="~/RegistrarPago">Pagos</a></li>
-                                       <li><a runat="server" href="~/RegistrarCompraMP">Compras</a></li>               
+                                       <li><a runat="server" href="~/RegistrarCompraMP">Compras</a></li>                                          
                                  <%                
                                      }
                                  %> 
