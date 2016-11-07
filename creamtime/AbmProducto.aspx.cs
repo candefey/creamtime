@@ -88,6 +88,8 @@ namespace creamtime
 
                     if (!string.IsNullOrWhiteSpace(txt_agregados.Text))
                         producto.Agregados = int.Parse(txt_agregados.Text);
+                    else
+                        producto.Agregados = 0;
 
                     Debug.WriteLine(producto.Agregados);
 
@@ -166,10 +168,7 @@ namespace creamtime
             txt_producto_nombre.Text = "" + producto.Nombre;
             combo_tipo_producto.SelectedItem.Text = producto.Tipo_Producto.Nombre;
 
-            if (producto.Agregados.HasValue)
-                txt_agregados.Text = Convert.ToString(producto.Agregados);
-            else
-                txt_agregados.Text = "";
+            txt_agregados.Text = Convert.ToString(producto.Agregados);            
 
             txt_codigo_producto.Text = "" + producto.Codigo_Producto.ToString("D8");
             txt_precio.Text = "" + producto.Precio;

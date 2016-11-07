@@ -437,5 +437,57 @@ namespace daos
             return cli;
         }
 
+
+        public static Cliente obtenerClienteUsuario(string username)
+        {
+            //Conexion
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            //Entidades
+            Cliente cliente = new Cliente();
+
+            //Recupero los Productos
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                cmd.Connection = con;
+
+                cmd.CommandText = @"SELECT cli.id
+                                          ,cli.nombre
+	                                      ,cli.apellido
+                                      FROM personas cli INNER JOIN usuarios usu
+                                        ON usu.id_persona = cli.id
+                                     WHERE usu.username = @username";
+
+                cmd.Parameters.AddWithValue("@username", username);
+
+                //Abre conexion y consulta
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //Agrego los productos a la lista
+                while (dr.Read())
+                {
+                    cliente.Id = (int)dr["id"];
+                    cliente.Nombre = dr["nombre"].ToString();
+                    cliente.Apellido = dr["apellido"].ToString();
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al recuperar el cliente: " + ex.Message);
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+
+            return cliente;
+        }
     }
 }

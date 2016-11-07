@@ -11,20 +11,20 @@ namespace daos
 {
     public class DaoSubDetallePedido
     {
-        public static void insertarSubDetalle(SubDetallePedido subdetalle)
+        public static void insertarSubDetalle(SubDetallePedido subdetalle, SqlConnection conexion, SqlTransaction transaction)
         {
             //Conexion
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
-            SqlConnection con = new SqlConnection();
+            SqlConnection con = conexion;
 
             //Inserto nuevo subdetalle
             SqlCommand cmd = new SqlCommand();
+            SqlTransaction tran = transaction;
             try
             {
-                con.ConnectionString = cadenaConexion;
-                con.Open();
                 cmd.Connection = con;
-                
+                cmd.Transaction = tran;
+
                 cmd.CommandText = @"INSERT INTO subdetalle_pedido (id_detalle_pedido
                                                                   ,id_producto)
                                     VALUES (@Detalle
@@ -40,12 +40,7 @@ namespace daos
             catch (Exception ex)
             {
                 throw new ApplicationException("Error al insertar un sudbetalle de pedido. " + ex.Message);
-            }
-            finally
-            {
-                if (con.State == System.Data.ConnectionState.Open)
-                    con.Close();
-            }
+            }            
         }
 
 

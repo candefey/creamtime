@@ -65,5 +65,27 @@ namespace negocio
             return DaoProducto.modificarProducto(producto);
         }
 
+        public static List<Producto> listaSabores()
+        {
+            return DaoProducto.obtenerSabores();
+        }
+        
+        public static List<Producto> listaProductosVendibles()
+        {
+            return DaoProducto.obtenerProductosVenta();
+        }
+
+        public static int obtenerAgregados(int id)
+        {
+            Producto prod = DaoProducto.buscarAgregados(id);
+
+            return prod.Agregados;
+        }
+
+        public static Producto obtenerProductoPorID(int id)
+        {
+            return DaoProducto.obtenerProductoPorID(id);
+        }
+       
     }
 }

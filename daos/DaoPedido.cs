@@ -39,7 +39,7 @@ namespace daos
                                            ,@Estado
                                            ,@NroPedido); Select @@identity;";
 
-                cmd.Parameters.AddWithValue("@Pedido", DateTime.Now);
+                cmd.Parameters.AddWithValue("@Pedido", pedido.Fecha_Pedido);
                 cmd.Parameters.AddWithValue("@Cliente", pedido.Cliente.Id);
                 cmd.Parameters.AddWithValue("@Monto", pedido.Monto);
                 cmd.Parameters.AddWithValue("@Estado", pedido.Estado.ID);
@@ -47,12 +47,13 @@ namespace daos
 
                 //Inserto pedido
                 int pedido_id = Convert.ToInt32(cmd.ExecuteScalar());
+                pedido.ID = pedido_id;
 
                 //Inserto subdetalles del pedido
                 foreach (DetallePedido det in detalles)
-                {
-                    det.Pedido.ID = pedido_id;
-                    DaoDetallePedido.insertarDetalle(det);
+                {   
+                    det.Pedido = pedido;
+                    DaoDetallePedido.insertarDetalle(det, con, tran);
                 }
 
                 tran.Commit();

@@ -59,5 +59,10 @@ namespace negocio
         {
             DaoCliente.eliminarCliente(dni);
         }
+
+        public static Cliente obtenerClientePorUsuario(string usuario)
+        {
+            return DaoCliente.obtenerClienteUsuario(usuario);
+        }
     }
 }
