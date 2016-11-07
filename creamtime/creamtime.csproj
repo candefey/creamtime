@@ -364,6 +364,7 @@
     </Compile>
     <Compile Include="RegistrarPedido.aspx.designer.cs">
       <DependentUpon>RegistrarPedido.aspx</DependentUpon>
+	</Compile>
     <Compile Include="RegistrarCompraMP.aspx.cs">
       <DependentUpon>RegistrarCompraMP.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

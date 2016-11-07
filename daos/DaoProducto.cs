@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -260,6 +261,54 @@ namespace daos
         }
 
 
+        public static Producto buscarAgregados(int id)
+        {
+            //Conexion
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            //Entidades
+            Producto producto = new Producto();
+
+            //Recupero los Productos
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                cmd.Connection = con;
+
+                cmd.CommandText = @"SELECT prod.agregados                                          
+                                      FROM productos prod 
+                                     WHERE prod.id = @ID";
+
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                //Abre conexion y consulta
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //Agrego los productos a la lista
+                while (dr.Read())
+                {
+                    producto.Agregados = (int)dr["agregados"];
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al recuperar los agregados: " + ex.Message);
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+
+            return producto;
+        }
+
+
         public static Boolean eliminarProducto(int codigo)
         {
             //Conexion
@@ -375,5 +424,209 @@ namespace daos
             return modifica;
         }
 
+
+        public static List<Producto> obtenerSabores()
+        {
+            //Conexion
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            //Entidades
+            List<Producto> listaProductos = new List<Producto>();
+
+            //Recupero los Productos
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                cmd.Connection = con;
+
+                cmd.CommandText = @"SELECT prod.id
+	                                      ,prod.nombre
+	                                      ,prod.id_tipo
+	                                      ,prod.codigo_producto
+	                                      ,prod.precio
+	                                      ,prod.fecha_alta
+	                                      ,prod.vigente                                                                              	                                      
+                                      FROM productos prod INNER JOIN tipo_producto tpro
+	                                    ON prod.id_tipo = tpro.id
+                                     WHERE UPPER(tpro.nombre) = 'CREMA HELADA'";
+                
+                //Abre conexion y consulta
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //Agrego los productos a la lista
+                while (dr.Read())
+                {
+                    Producto producto = new Producto();
+                    TipoProducto tipo = new TipoProducto();
+
+                    producto.Id = (int)dr["id"];
+                    producto.Nombre = dr["nombre"].ToString();
+
+                    tipo.Id = (int)dr["id_tipo"];
+                    producto.Tipo_Producto = tipo;
+
+                    producto.Codigo_Producto = (int)dr["codigo_producto"];
+                    producto.Precio = float.Parse(dr["precio"].ToString());
+                    producto.Fecha_Alta = (DateTime)dr["fecha_alta"];
+                    producto.Vigente = (Boolean)dr["vigente"];
+                    
+                    listaProductos.Add(producto);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al recuperar los sabores: " + ex.Message);
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+
+            return listaProductos;
+        }
+
+
+        public static List<Producto> obtenerProductosVenta()
+        {
+            //Conexion
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            //Entidades
+            List<Producto> listaProductos = new List<Producto>();
+
+            //Recupero los Productos
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                cmd.Connection = con;
+
+                cmd.CommandText = @"SELECT prod.id
+	                                      ,prod.nombre
+	                                      ,prod.id_tipo
+	                                      ,prod.codigo_producto
+	                                      ,prod.precio
+	                                      ,prod.fecha_alta
+	                                      ,prod.vigente
+                                          ,prod.agregados	                                      
+                                      FROM productos prod INNER JOIN tipo_producto tpro
+	                                    ON prod.id_tipo = tpro.id
+                                     WHERE UPPER(tpro.nombre) != UPPER('crema helada')";
+                
+                //Abre conexion y consulta
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //Agrego los productos a la lista
+                while (dr.Read())
+                {
+                    Producto producto = new Producto();
+                    TipoProducto tipo = new TipoProducto();
+
+                    producto.Id = (int)dr["id"];
+                    producto.Nombre = dr["nombre"].ToString();
+
+                    tipo.Id = (int)dr["id_tipo"];
+                    producto.Tipo_Producto = tipo;
+
+                    producto.Codigo_Producto = (int)dr["codigo_producto"];
+                    producto.Precio = float.Parse(dr["precio"].ToString());
+                    producto.Fecha_Alta = (DateTime)dr["fecha_alta"];
+                    producto.Vigente = (Boolean)dr["vigente"];
+                    if (dr["agregados"] != DBNull.Value)
+                        producto.Agregados = (int)dr["agregados"];
+
+                    listaProductos.Add(producto);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al recuperar los productos vendibles: " + ex.Message);
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+
+            return listaProductos;
+        }
+
+
+        public static Producto obtenerProductoPorID(int id)
+        {
+            //Conexion
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            //Entidades
+            Producto producto = new Producto();
+
+            //Recupero los Productos
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                cmd.Connection = con;
+
+                cmd.CommandText = @"SELECT prod.id
+	                                      ,prod.nombre
+	                                      ,prod.id_tipo
+	                                      ,prod.codigo_producto
+	                                      ,prod.precio
+	                                      ,prod.fecha_alta
+	                                      ,prod.vigente
+                                          ,prod.agregados	                                      
+                                      FROM productos prod 
+                                     WHERE prod.id = @ID";
+
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                //Abre conexion y consulta
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //Agrego los productos a la lista
+                while (dr.Read())
+                {
+                    TipoProducto tipo = new TipoProducto();
+
+                    producto.Id = (int)dr["id"];
+                    producto.Nombre = dr["nombre"].ToString();
+
+                    tipo.Id = (int)dr["id_tipo"];
+                    
+
+                    producto.Tipo_Producto = tipo;
+                    producto.Codigo_Producto = (int)dr["codigo_producto"];
+                    producto.Precio = float.Parse(dr["precio"].ToString());
+                    producto.Fecha_Alta = (DateTime)dr["fecha_alta"];
+                    producto.Vigente = (Boolean)dr["vigente"];
+                    producto.Agregados = (int)dr["agregados"];                    
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al recuperar los productos: " + ex.Message);
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+
+            return producto;
+        }
     }
 }

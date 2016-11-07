@@ -51,6 +51,7 @@
     <Compile Include="GestorCliente.cs" />
     <Compile Include="GestorEnvio.cs" />
     <Compile Include="GestorPagos.cs" />
+    <Compile Include="GestorEstados.cs" />
     <Compile Include="GestorPedido.cs" />
     <Compile Include="GestorNuevaCompra.cs" />
     <Compile Include="GestorProducto.cs" />
