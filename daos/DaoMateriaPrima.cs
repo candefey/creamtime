@@ -139,7 +139,7 @@ namespace daos
 
 
 
-        public static void insertarCompras(List<DetalleCompra> detalles, float monto)
+        public static void insertarCompras(List<DetalleCompraView> detalles, float monto)
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
             SqlConnection cn = new SqlConnection();
@@ -160,7 +160,7 @@ namespace daos
                 cmd.Transaction = tran;
                 cmd.Parameters.AddWithValue("@fecha", DateTime.Now);
                 cmd.Parameters.AddWithValue("@monto",monto);
-                cmd.Parameters.AddWithValue("@nro", DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day);
+                cmd.Parameters.AddWithValue("@nro", DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second);
                 int idUltimaCompra = Convert.ToInt32(cmd.ExecuteScalar());
 
                 foreach (var de in detalles)

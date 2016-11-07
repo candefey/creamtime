@@ -305,6 +305,68 @@ namespace daos
 
         }
 
+        public static Proveedor buscarProveedorPorId(int id)
+        {
+
+
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            Proveedor p = new Proveedor();
+
+            SqlConnection con = new SqlConnection();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string consulta = "SELECT P.id AS id, P.razon_social AS rs, P.cuit AS cuit, P.vigente AS v, P.fecha_alta AS fa, P.telefono AS tel, P.email AS mail, D.id AS iddom, D.calle AS calledom, D.numero AS numdom, B.id AS idbarrio, B.nombre AS nombrebarrio, L.id AS idloc, L.nombre AS nomloc FROM proveedores P INNER JOIN domicilios D ON P.id_domicilio=D.id INNER JOIN barrios B ON B.id = D.id_barrio INNER JOIN localidades L ON L.id = B.id_localidad WHERE P.id=@id_pro";
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = consulta;
+                cmd.Parameters.Add(new SqlParameter("@id_pro", id));
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    Domicilio dom = new Domicilio();
+                    Barrio barrio = new Barrio();
+                    Localidad localidad = new Localidad();
+                    localidad.Id = (int)reader["idloc"];
+                    localidad.Nombre = (string)reader["nomloc"];
+
+                    barrio.Id = (int)reader["idbarrio"];
+                    barrio.Nombre = (string)reader["nombrebarrio"];
+                    barrio.Localidad = localidad;
+
+                    dom.Id = (int)reader["iddom"];
+                    dom.Calle = (string)reader["calledom"];
+                    dom.Numero = reader["numdom"].ToString();
+                    dom.Barrio = barrio;
+
+                    p.Id = (int)reader["id"];
+                    p.RazonSocial = (string)reader["rs"];
+                    p.Cuit = (long)reader["cuit"];
+                    p.Vigente = (int)reader["v"]; //Problema por ser tinyint en la base de datos.
+                    p.FechaDeAlta = (DateTime)reader["fa"];
+                    p.Telefono = (string)reader["tel"];
+                    p.Email = (string)reader["mail"];
+                    p.Domicilio = dom;
+
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+
+            return p;
+
+        }
+
     }
 
 }

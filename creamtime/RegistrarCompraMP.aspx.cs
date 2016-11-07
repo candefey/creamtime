@@ -34,15 +34,15 @@ namespace creamtime
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            List<DetalleCompra> lista;
+            List<DetalleCompraView> lista;
 
             if (Application["detalles"] != null)
             {
-                lista = (List<DetalleCompra>)Application["detalles"];
+                lista = (List<DetalleCompraView>)Application["detalles"];
             }
             else
             {
-                lista = new List<DetalleCompra>();
+                lista = new List<DetalleCompraView>();
             }
 
 
@@ -82,15 +82,15 @@ namespace creamtime
         protected void btn_agregar_Click(object sender, EventArgs e)
         {
             
-                List<DetalleCompra> lista;
+                List<DetalleCompraView> lista;
 
                 if (Application["detalles"] != null)
                 {
-                    lista = (List<DetalleCompra>)Application["detalles"];
+                    lista = (List<DetalleCompraView>)Application["detalles"];
                 }
                 else
                 {
-                    lista = new List<DetalleCompra>();
+                    lista = new List<DetalleCompraView>();
                 }
 
 
@@ -99,7 +99,7 @@ namespace creamtime
                 int idmp = Convert.ToInt16(combo_mp.SelectedValue);
                 string mp = combo_mp.SelectedItem.Text;
 
-                DetalleCompra detalle = new DetalleCompra();
+                DetalleCompraView detalle = new DetalleCompraView();
                 detalle.IdProveedor = idp;
                 detalle.nombreProveedor = pro;
                 detalle.nombreMP = mp;
@@ -119,16 +119,21 @@ namespace creamtime
         {
             try
             {
-                List<DetalleCompra> lista= (List<DetalleCompra>)Application["detalles"];
-            GestorNuevaCompra.insertarCompra(lista);
-            combo_proveedores.ClearSelection();
-            combo_proveedores.Items.FindByText("Sin selección").Selected = true;
-
-        }
+                List<DetalleCompraView> lista= (List<DetalleCompraView>)Application["detalles"];
+                GestorNuevaCompra.insertarCompra(lista);
+                combo_proveedores.ClearSelection();
+                combo_proveedores.Items.FindByText("Sin selección").Selected = true;
+                lbl_success_.Text = "Pedido de Compras de materias primas realizado con éxito!";
+                lbl_success_.Visible = true;
+            }
+            catch (ApplicationException ex)
+            {
+                throw new ApplicationException("Error en la inserción.");
+            }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error generico en la inserción.");
-    }
+                throw new Exception("Error generico en la inserción.");
+            }
             finally
             {
                 Application["detalles"] = null;

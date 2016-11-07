@@ -100,11 +100,9 @@
                         
                     </Columns>
                 </asp:GridView>
-                  
-         </div>
-         <div>
          <asp:Button ID="btn_confirmar" class="btn btn-info" runat="server" Text="Confirmar" OnClick="btn_confirmar_Click"/>
          </div>
+        
      </div>
     </div>
  </div>

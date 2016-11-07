@@ -24,14 +24,17 @@ namespace negocio
             return DaoMateriaPrima.buscarMateriaPrima(id);
         }
 
-        public static void insertarCompra(List<DetalleCompra> detalles)
+        public static void insertarCompra(List<DetalleCompraView> detalles)
         {
             float suma = 0;
             foreach (var d in detalles)
             {
                 suma += d.Monto;
             }
-            DaoMateriaPrima.insertarCompras(detalles,suma);
+            decimal suma_d = Convert.ToDecimal(suma);
+            decimal suma_redondeada= Math.Round(suma_d, 2);
+            float suma_float = (float)suma_redondeada;
+            DaoMateriaPrima.insertarCompras(detalles,suma_float);
         }
     }
 }

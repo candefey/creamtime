@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DaoCliente.cs" />
+    <Compile Include="DaoCompras.cs" />
+    <Compile Include="DaoDetalleCompra.cs" />
     <Compile Include="DaoDetallePedido.cs" />
     <Compile Include="DaoDomicilio.cs" />
     <Compile Include="DaoEnvio.cs" />

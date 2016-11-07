@@ -52,8 +52,10 @@
     <Compile Include="Barrio.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ClienteView.cs" />
-    <Compile Include="DetallePedido.cs" />
+    <Compile Include="Compra.cs" />
     <Compile Include="DetalleCompra.cs" />
+    <Compile Include="DetallePedido.cs" />
+    <Compile Include="DetalleCompraView.cs" />
     <Compile Include="Domicilio.cs" />
     <Compile Include="Envio.cs" />
     <Compile Include="EnviosView.cs" />

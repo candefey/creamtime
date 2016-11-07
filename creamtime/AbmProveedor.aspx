@@ -127,7 +127,7 @@
                         <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
                         <asp:BoundField DataField="Email" HeaderText="Email" />
                         <asp:CommandField CausesValidation="False" ShowDeleteButton="True" />
-                        <asp:CommandField ShowSelectButton="True" />
+                        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
                     </Columns>
                 </asp:GridView>
                   
