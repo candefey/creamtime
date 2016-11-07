@@ -489,5 +489,84 @@ namespace daos
 
             return cliente;
         }
+        public static List<ClienteView> obtenerClientesInforme(string combo_sexo_texto, string localidad, string barrio, DateTime fecha_desde, DateTime fecha_hasta)
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            Barrio bar = new Barrio();
+            SqlConnection con = new SqlConnection();
+            List<ClienteView> clientes = new List<ClienteView>();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT p.*, u.username,d.calle,d.numero,b.nombre AS 'barrio',s.nombre AS 'sexo', l.nombre AS 'localidad' FROM personas p INNER JOIN rol r ON p.id_rol=r.id INNER JOIN usuarios u ON u.id_persona=p.id";
+                sql+= " INNER JOIN domicilios d ON p.id_domicilio = d.id INNER JOIN barrios b ON d.id_barrio = b.id";
+                sql+= " INNER JOIN sexo s ON s.id = p.id_sexo INNER JOIN localidades l ON l.id = b.id_localidad WHERE (p.vigente = 1 AND r.nombre = 'Cliente')";
+                sql+= " AND (@ComboSexoTexto LIKE 'vacio' OR s.nombre LIKE @ComboSexoTexto) AND (@LocalidadTexto LIKE 'vacio' OR l.nombre LIKE @LocalidadTexto) AND (@BarrioTexto LIKE 'vacio' OR b.nombre LIKE @BarrioTexto) AND";
+                sql+= " ((p.fecha_nacimiento >= @FechaDesde AND p.fecha_nacimiento <= @FechaHasta) OR (@FechaDesde IS NULL AND @FechaHasta IS NULL)";
+                sql+= " OR (@FechaDesde IS NULL AND @FechaHasta <= GETDATE()) OR (@FechaHasta IS NULL AND @FechaDesde <= GETDATE()))";
+                
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;
+                if(combo_sexo_texto==null)
+                {
+                    combo_sexo_texto = "vacio";
+                }
+                if(localidad==null)
+                {
+                    localidad = "vacio";
+                }
+                if(barrio==null)
+                {
+                    barrio = "vacio";
+                }
+                cmd.Parameters.Add(new SqlParameter("@ComboSexoTexto", combo_sexo_texto));
+                cmd.Parameters.Add(new SqlParameter("@LocalidadTexto", localidad));
+                cmd.Parameters.Add(new SqlParameter("@BarrioTexto", barrio));
+                cmd.Parameters.Add(new SqlParameter("@FechaDesde", fecha_desde));
+                cmd.Parameters.Add(new SqlParameter("@FechaHasta", fecha_hasta));
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    DateTime fecha_nac = (DateTime)dr["fecha_nacimiento"];
+                    var now = float.Parse(DateTime.Now.ToString("yyyyMMdd"));
+                    var dob = float.Parse(fecha_nac.ToString("yyyyMMdd"));
+                    var age = (int)(now - dob) / 10000;
+                    ClienteView cliente = new ClienteView();
+                    cliente.Nombre = dr["nombre"].ToString();
+                    cliente.Apellido = dr["apellido"].ToString();
+                    cliente.Dni = (long)dr["dni"];
+                    cliente.Usuario = dr["username"].ToString();
+                    cliente.Edad = age;
+                    cliente.Sexo = dr["sexo"].ToString();
+                    cliente.Telefono = dr["telefono"].ToString();
+                    cliente.Email = dr["email"].ToString();
+                    cliente.Calle = dr["calle"].ToString();
+                    cliente.Numero = dr["numero"].ToString();
+                    cliente.Barrio = dr["barrio"].ToString();
+                    cliente.Localidad = dr["localidad"].ToString();
+
+                    clientes.Add(cliente);
+
+                }
+
+                dr.Close();
+            }
+
+
+
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+
+            return clientes;
+        }
     }
 }
