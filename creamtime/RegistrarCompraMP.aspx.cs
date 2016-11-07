@@ -117,27 +117,15 @@ namespace creamtime
 
         protected void btn_confirmar_Click(object sender, EventArgs e)
         {
-            try
-            {
+            
                 List<DetalleCompraView> lista= (List<DetalleCompraView>)Application["detalles"];
                 GestorNuevaCompra.insertarCompra(lista);
                 combo_proveedores.ClearSelection();
                 combo_proveedores.Items.FindByText("Sin selección").Selected = true;
+                
                 lbl_success_.Text = "Pedido de Compras de materias primas realizado con éxito!";
                 lbl_success_.Visible = true;
-            }
-            catch (ApplicationException ex)
-            {
-                throw new ApplicationException("Error en la inserción.");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error generico en la inserción.");
-            }
-            finally
-            {
-                Application["detalles"] = null;
-            }
+                txt_cantidad.Text = "";
         }
     }
 }

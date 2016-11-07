@@ -36,12 +36,6 @@ namespace creamtime
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            combo_proveedor_localidad.ClearSelection();
-            combo_proveedor_barrio.ClearSelection();
-            combo_proveedor_localidad.Items.Add("Sin selección");
-            combo_proveedor_localidad.Items.FindByText("Sin selección").Selected = true;
-            combo_proveedor_barrio.Items.Add("Sin selección");
-            combo_proveedor_barrio.Items.FindByText("Sin selección").Selected = true;
             if (!Page.IsPostBack)
             {
                 lbl_error.Visible = false;
@@ -57,6 +51,8 @@ namespace creamtime
                 btn_proveedor_actualizar.Visible = false;
                 //Por defecto carga Cordoba como Localidad con sus Barrios
                 List<Localidad> localidades = GestorProveedor.listarLocalidades();
+                combo_proveedor_localidad.ClearSelection();
+                combo_proveedor_barrio.ClearSelection();
                 combo_proveedor_localidad.DataSource = localidades;
                 combo_proveedor_localidad.DataTextField = "Nombre";
                 combo_proveedor_localidad.DataValueField = "Id";                
@@ -91,6 +87,9 @@ namespace creamtime
 
         protected void btn_proveedor_registrar_Click(object sender, EventArgs e)
         {
+            lbl_error.Visible = false;
+            lbl_success.Visible = false;
+            lbl_warning.Visible = false;
             if (Page.IsValid)
             {
                 try
@@ -141,8 +140,6 @@ namespace creamtime
                         Console.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
                         lbl_success.Text = "Proveedor registrado con éxito!";
                         lbl_success.Visible = true;
-                        lbl_error.Visible = false;
-                        lbl_warning.Visible = false;
                         GestorProveedor.insertarProveedor(nuevo_pro);
                         this.cargarGrilla();
 
@@ -236,7 +233,7 @@ namespace creamtime
             combo_proveedor_localidad.Items.FindByText(p.Domicilio.Barrio.Localidad.Nombre).Selected = true;
             lbl_fecha_de_alta.Visible = true;   
             lbl_fecha_de_alta.Text = Convert.ToString(p.FechaDeAlta.ToShortDateString());
-            lbl_titulo_fecha_alta.Visible = true;
+            lbl_titulo_fecha_alta.Visible = false;
             
             
         }

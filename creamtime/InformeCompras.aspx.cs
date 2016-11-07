@@ -115,7 +115,8 @@ namespace creamtime
             }
             catch (ApplicationException ex)
             {
-                throw new Exception("Error generico en el informe.");
+                lbl_error_.Text = "Ha surgido un error inesperado, contacte a su administrador";
+                lbl_error_.Visible = true;
             }
         }
 
