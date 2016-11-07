@@ -1,6 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" EnableViewState="true" AutoEventWireup="true" CodeBehind="InformeCompras.aspx.cs" Inherits="creamtime.InformeCompras" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
+    <script>
+  $( function() {
+    $( document ).tooltip();
+  });
+ 
+</script>
     <h4>Informe Compras Realizadas a Proveedores</h4>
     <div class="row" id="labels" style="display:block;">             
     <strong>
@@ -45,11 +50,11 @@
              <asp:Label ID="Label1" runat="server" Text="Monto Total Compra"></asp:Label>   
             <div class="form-group">
                 <asp:CompareValidator ID="validator_desde" ControlToValidate="txt_desde" Operator="DataTypeCheck" Type="Integer" ErrorMessage="*Tipo de dato inválido" runat="server" ForeColor="#CC3300" SetFocusOnError="True" Display="Dynamic"></asp:CompareValidator>
-                <asp:TextBox placeholder="Desde" class="form-control" ID="txt_desde" title="Ingrese el monto desde. Debe ser un número entero." runat="server"></asp:TextBox>
+                <asp:TextBox min="0" placeholder="Desde" class="form-control" ID="txt_desde" title="Ingrese el monto desde. Debe ser un número entero." runat="server"></asp:TextBox>
             </div> 
              <div class="form-group">
                 <asp:CompareValidator ID="validator_hasta" ControlToValidate="txt_hasta" Operator="DataTypeCheck" Type="Integer" ErrorMessage="*Tipo de dato inválido" runat="server" ForeColor="#CC3300" SetFocusOnError="True" Display="Dynamic"></asp:CompareValidator>
-                <asp:TextBox placeholder="Hasta" class="form-control" ID="txt_hasta" title="Ingrese el monto desde. Debe ser un número entero." runat="server"></asp:TextBox>
+                <asp:TextBox  min="0" placeholder="Hasta" class="form-control" ID="txt_hasta" title="Ingrese el monto desde. Debe ser un número entero." runat="server"></asp:TextBox>
             </div>
              <asp:Button ID="btn_filtrar" class="btn btn-info" runat="server" Text="Ver Compras" OnClick="btn_filtrar_Click"/>              
          </div>
