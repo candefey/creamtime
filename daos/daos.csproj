@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DaoCliente.cs" />
     <Compile Include="DaoDomicilio.cs" />
+    <Compile Include="DaoMateriaPrima.cs" />
     <Compile Include="DaoProducto.cs" />
     <Compile Include="DaoProveedor.cs" />
     <Compile Include="DaoRol.cs" />

@@ -38,6 +38,10 @@ namespace creamtime
         {
             combo_proveedor_localidad.ClearSelection();
             combo_proveedor_barrio.ClearSelection();
+            combo_proveedor_localidad.Items.Add("Sin selección");
+            combo_proveedor_localidad.Items.FindByText("Sin selección").Selected = true;
+            combo_proveedor_barrio.Items.Add("Sin selección");
+            combo_proveedor_barrio.Items.FindByText("Sin selección").Selected = true;
             if (!Page.IsPostBack)
             {
                 lbl_error.Visible = false;
