@@ -100,7 +100,10 @@
                                        <li><a runat="server" href="~/AbmProducto">Productos</a></li>
                                        <li><a runat="server" href="~/RegistrarEnvio">Envios</a></li>
                                        <li><a runat="server" href="~/RegistrarPago">Pagos</a></li>
-                                       <li><a runat="server" href="~/RegistrarCompraMP">Compras</a></li>                                          
+                                       <li><a runat="server" href="~/RegistrarCompraMP">Compras</a></li>
+                                       <li><a runat="server" href="~/InformeClientes">IClientes</a></li>
+                                       <li><a runat="server" href="~/InformeCompras">ICompras</a></li>
+                                       <li><a runat="server" href="~/InformePedidos">IPedidos</a></li>                                          
                                  <%                
                                      }
                                  %> 

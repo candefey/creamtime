@@ -205,6 +205,9 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="InformeClientes.aspx" />
+    <Content Include="InformeCompras.aspx" />
+    <Content Include="InformePedidos.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -307,6 +310,27 @@
     <Compile Include="AbmProveedor.aspx.designer.cs">
       <DependentUpon>AbmProveedor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="InformeClientes.aspx.cs">
+      <DependentUpon>InformeClientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformeClientes.aspx.designer.cs">
+      <DependentUpon>InformeClientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InformeCompras.aspx.cs">
+      <DependentUpon>InformeCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformeCompras.aspx.designer.cs">
+      <DependentUpon>InformeCompras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InformePedidos.aspx.cs">
+      <DependentUpon>InformePedidos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InformePedidos.aspx.designer.cs">
+      <DependentUpon>InformePedidos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -364,7 +388,7 @@
     </Compile>
     <Compile Include="RegistrarPedido.aspx.designer.cs">
       <DependentUpon>RegistrarPedido.aspx</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="RegistrarCompraMP.aspx.cs">
       <DependentUpon>RegistrarCompraMP.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
