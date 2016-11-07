@@ -72,8 +72,13 @@ namespace creamtime
         {
             string nombre_sexo = combo_sexo.SelectedItem.Text;
             string nombre_localidad = combo_localidad.SelectedItem.Text;
+            string nombre_barrio = combo_barrio.SelectedItem.Text;
             string fecha_desde_texto = txt_fecha_desde.Text;
-            string fecha_hasta_texto= txt_fecha_hasta.Text;           
+            string fecha_hasta_texto= txt_fecha_hasta.Text;
+            DateTime fecha_desde = new DateTime();
+            DateTime fecha_hasta = new DateTime();
+            
+                
             try
             {
                 string nombre_sexo_parametro=null;
@@ -87,24 +92,41 @@ namespace creamtime
                 {
                     nombre_localidad_parametro = nombre_localidad;
                 }
-                DateTime fecha_desde_parametro = new DateTime(1900, 1, 1);
-                if (fecha_desde_texto != "")
+
+                string nombre_barrio_texto = null;
+                if (combo_barrio.Items.FindByText("Sin selección").Selected == false)
                 {
-                    fecha_desde_parametro= Convert.ToDateTime(fecha_desde_texto);
+                    nombre_barrio_texto = nombre_barrio;
                 }
-                DateTime fecha_hasta_parametro = DateTime.Today; 
-                if (fecha_hasta_texto != "")
+
+                if (fecha_desde_texto=="")
                 {
-                    fecha_hasta_parametro = Convert.ToDateTime(fecha_hasta_texto);
+                    fecha_desde = new DateTime(1900,1,1);
                 }
-                List<ClienteView> clientes = GestorCliente.obtenerClientesInforme(nombre_sexo_parametro, nombre_localidad_parametro, fecha_desde_parametro, fecha_hasta_parametro);
-                info_clientes_gridview.DataSource = clientes;
-                info_clientes_gridview.DataBind();
+                else
+                {
+                    fecha_desde = Convert.ToDateTime(fecha_desde_texto);
+                }
+                if (fecha_hasta_texto == "")
+                {
+                    fecha_hasta = DateTime.Now;
+                }
+                else
+                {
+                    fecha_hasta = Convert.ToDateTime(fecha_hasta_texto);
+                }
+
+                if(fecha_desde<fecha_hasta)
+                {
+                    List<ClienteView> clientes = GestorCliente.obtenerClientesInforme(nombre_sexo_parametro, nombre_localidad_parametro, nombre_barrio_texto, fecha_desde, fecha_hasta);
+                    info_clientes_gridview.DataSource = clientes;
+                    info_clientes_gridview.DataBind();
+                }
 
             }
             catch (ApplicationException ex)
             {
-                throw new ApplicationException("Error en el listado");
+                Console.WriteLine("Error en el informe");
             }
         }
 

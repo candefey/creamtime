@@ -64,9 +64,9 @@ namespace negocio
         {
             return DaoCliente.obtenerClienteUsuario(usuario);
         }
-        public static List<ClienteView> obtenerClientesInforme(string combo_sexo_texto, string localidad, DateTime fecha_desde, DateTime fecha_hasta)
+        public static List<ClienteView> obtenerClientesInforme(string combo_sexo_texto, string localidad, string barrio, DateTime fecha_desde, DateTime fecha_hasta)
         {
-            return DaoCliente.obtenerClientesInforme(combo_sexo_texto, localidad, fecha_desde, fecha_hasta);
+            return DaoCliente.obtenerClientesInforme(combo_sexo_texto, localidad, barrio, fecha_desde, fecha_hasta);
         }
 
     }

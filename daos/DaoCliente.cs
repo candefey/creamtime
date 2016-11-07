@@ -489,7 +489,7 @@ namespace daos
 
             return cliente;
         }
-        public static List<ClienteView> obtenerClientesInforme(string combo_sexo_texto, string localidad, DateTime fecha_desde, DateTime fecha_hasta)
+        public static List<ClienteView> obtenerClientesInforme(string combo_sexo_texto, string localidad, string barrio, DateTime fecha_desde, DateTime fecha_hasta)
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
             Barrio bar = new Barrio();
@@ -500,17 +500,30 @@ namespace daos
                 con.ConnectionString = cadenaConexion;
                 con.Open();
                 string sql = "SELECT p.*, u.username,d.calle,d.numero,b.nombre AS 'barrio',s.nombre AS 'sexo', l.nombre AS 'localidad' FROM personas p INNER JOIN rol r ON p.id_rol=r.id INNER JOIN usuarios u ON u.id_persona=p.id";
-                sql+= "INNER JOIN domicilios d ON p.id_domicilio = d.id INNER JOIN barrios b ON d.id_barrio = b.id";
-                sql+= "INNER JOIN sexo s ON s.id = p.id_sexo INNER JOIN localidades l ON l.id = b.id_localidad WHERE(p.vigente = 1 AND r.nombre = 'Cliente')";
-                sql+= "AND(@ComboSexoTexto IS NULL OR sexo LIKE @ComboSexoTexto) AND(@LocalidadTexto IS NULL OR localidad LIKE @LocalidadTexto) AND";
-                sql+= "((p.fecha_nacimiento >= @FechaDesde AND p.fecha_nacimiento <= @FechaHasta) OR(@FechaDesde IS NULL AND @FechaHasta IS NULL)";
-                sql+= "OR(@FechaDesde IS NULL AND @FechaHasta <= GETDATE()) OR(@FechaHasta IS NULL AND @FechaDesde <= GETDATE())";
+                sql+= " INNER JOIN domicilios d ON p.id_domicilio = d.id INNER JOIN barrios b ON d.id_barrio = b.id";
+                sql+= " INNER JOIN sexo s ON s.id = p.id_sexo INNER JOIN localidades l ON l.id = b.id_localidad WHERE (p.vigente = 1 AND r.nombre = 'Cliente')";
+                sql+= " AND (@ComboSexoTexto LIKE 'vacio' OR s.nombre LIKE @ComboSexoTexto) AND (@LocalidadTexto LIKE 'vacio' OR l.nombre LIKE @LocalidadTexto) AND (@BarrioTexto LIKE 'vacio' OR b.nombre LIKE @BarrioTexto) AND";
+                sql+= " ((p.fecha_nacimiento >= @FechaDesde AND p.fecha_nacimiento <= @FechaHasta) OR (@FechaDesde IS NULL AND @FechaHasta IS NULL)";
+                sql+= " OR (@FechaDesde IS NULL AND @FechaHasta <= GETDATE()) OR (@FechaHasta IS NULL AND @FechaDesde <= GETDATE()))";
                 
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = sql;
                 cmd.Connection = con;
+                if(combo_sexo_texto==null)
+                {
+                    combo_sexo_texto = "vacio";
+                }
+                if(localidad==null)
+                {
+                    localidad = "vacio";
+                }
+                if(barrio==null)
+                {
+                    barrio = "vacio";
+                }
                 cmd.Parameters.Add(new SqlParameter("@ComboSexoTexto", combo_sexo_texto));
                 cmd.Parameters.Add(new SqlParameter("@LocalidadTexto", localidad));
+                cmd.Parameters.Add(new SqlParameter("@BarrioTexto", barrio));
                 cmd.Parameters.Add(new SqlParameter("@FechaDesde", fecha_desde));
                 cmd.Parameters.Add(new SqlParameter("@FechaHasta", fecha_hasta));
                 SqlDataReader dr = cmd.ExecuteReader();
