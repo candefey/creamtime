@@ -14,5 +14,10 @@ namespace negocio
         {
             return DaoEstados.obtenerEstadoPorNombre(nombre);
         }
+
+        public static List<Estado> obtenerEstados()
+        {
+            return DaoEstados.obtenerEstados();
+        }
     }
 }

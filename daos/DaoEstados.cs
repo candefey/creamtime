@@ -49,5 +49,48 @@ namespace daos
 
             return estado;
         }
+
+
+        public static List<Estado> obtenerEstados()
+        {
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            List<Estado> listaEstados = new List<Estado>();
+            Estado estado;
+            try
+            {
+
+                con.ConnectionString = cadenaConexion;
+                con.Open();
+                string sql = "SELECT e.id,e.nombre FROM estados e";
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = con;                
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    estado = new Estado();
+
+                    estado.ID = (int)dr["id"];
+                    estado.Nombre = dr["nombre"].ToString();
+
+                    listaEstados.Add(estado);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("" + ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                    con.Close();
+            }
+
+            return listaEstados;
+        }
     }
 }

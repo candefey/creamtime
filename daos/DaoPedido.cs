@@ -72,5 +72,115 @@ namespace daos
             }
         }
 
+
+        public static List<Pedido> informePedidos(DateTime? desde, DateTime? hasta, string apellido, int? estado)
+        {
+            //Conexion
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
+            SqlConnection con = new SqlConnection();
+
+            //Entidades
+            List<Pedido> listaPedidos = new List<Pedido>();
+            Pedido pedido;
+            Cliente cliente;
+            Estado estadoPed;
+
+            //Recupero los Productos
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                con.ConnectionString = cadenaConexion;
+                cmd.Connection = con;
+
+                string sql;
+
+                if (estado >= 0)
+                {
+                    sql = @"SELECT ped.id
+                                ,ped.nro_pedido
+                                ,ped.fecha_pedido
+	                            ,SUM(ped.monto) as Monto
+	                            ,est.id as idEstado
+	                            ,est.nombre as nomEstado
+	                            ,cli.nombre as nomCliente
+	                            ,cli.apellido	as apeCliente
+                            FROM pedido ped INNER JOIN personas cli
+                            ON ped.id_cliente = cli.id INNER JOIN detalle_pedido det
+	                        ON det.id_pedido = ped.id INNER JOIN estados est
+	                        ON ped.id_estado = est.id
+                            WHERE (ped.fecha_pedido BETWEEN ISNULL(@Desde, ped.fecha_pedido-1)
+		                                                AND ISNULL(@Hasta, ped.fecha_pedido+1))
+                            AND (UPPER(cli.apellido) LIKE UPPER(ISNULL(@Apellido, cli.apellido)))
+                            AND (ped.id_estado = ISNULL(@Estado, ped.id_estado))
+                        GROUP BY ped.nro_pedido, ped.fecha_pedido, ped.id, cli.nombre, cli.apellido, est.id, est.nombre";
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("@Estado", estado);
+                }
+                else
+                {
+                    sql = @"SELECT ped.id
+                                ,ped.nro_pedido
+                                ,ped.fecha_pedido
+	                            ,SUM(ped.monto) as Monto
+	                            ,est.id as idEstado
+	                            ,est.nombre as nomEstado
+	                            ,cli.nombre as nomCliente
+	                            ,cli.apellido	as apeCliente
+                            FROM pedido ped INNER JOIN personas cli
+                            ON ped.id_cliente = cli.id INNER JOIN detalle_pedido det
+	                        ON det.id_pedido = ped.id INNER JOIN estados est
+	                        ON ped.id_estado = est.id
+                            WHERE (ped.fecha_pedido BETWEEN ISNULL(@Desde, ped.fecha_pedido-1)
+		                                                AND ISNULL(@Hasta, ped.fecha_pedido+1))
+                            AND (UPPER(cli.apellido) LIKE UPPER(ISNULL(@Apellido, cli.apellido)))
+                           GROUP BY ped.nro_pedido, ped.fecha_pedido, ped.id, cli.nombre, cli.apellido, est.id, est.nombre";
+                    cmd.CommandText = sql;
+                }                
+
+                cmd.Parameters.AddWithValue("@Desde", desde);
+                cmd.Parameters.AddWithValue("@Hasta", hasta);
+                cmd.Parameters.AddWithValue("@Apellido", apellido);
+                
+                //Abre conexion y consulta
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                //Agrego los productos a la lista
+                while (dr.Read())
+                {
+                    pedido = new Pedido();
+                    cliente = new Cliente();
+                    estadoPed = new Estado();
+
+                    pedido.ID = (int)dr["id"];
+                    pedido.Nro_Pedido = (int)dr["nro_pedido"];
+                    pedido.Fecha_Pedido = (DateTime)dr["fecha_pedido"];
+                    pedido.Monto = (float)dr["Monto"];
+
+                    estadoPed.ID = (int)dr["idEstado"];
+                    estadoPed.Nombre = dr["Estado"].ToString();
+                    pedido.Estado = estadoPed;
+
+                    cliente.Nombre = dr["nomCliente"].ToString();
+                    cliente.Apellido = dr["apeCliente"].ToString();
+                    pedido.Cliente = cliente;
+
+                    listaPedidos.Add(pedido);
+                }
+
+                dr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new ApplicationException("Error al recuperar los pedidos: " + ex.Message);
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+
+            return listaPedidos;
+        }
     }    
 }
