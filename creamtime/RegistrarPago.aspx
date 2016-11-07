@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarEnvio.aspx.cs" Inherits="creamtime.RegistrarEnvio" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="RegistrarPago.aspx.cs" Inherits="creamtime.RegistrarPago" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script>  
     $(document).ready(function () {
@@ -24,10 +24,10 @@
                 <div class="panel-boy">
                      <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4>Registro de envios pendientes</h4>
+                                <h4>Registro de pagos pendientes</h4>
                             </div>
                              <div class="panel-body table-responsive"">
-                                <asp:GridView ID="envio_gridview" runat="server" CssClass="table table-striped table-bordered table-hover" Width="100%" OnRowCommand="envio_gridview_RowCommand">
+                                <asp:GridView ID="pago_gridview" runat="server" CssClass="table table-striped table-bordered table-hover" Width="100%" OnRowCommand="pago_gridview_RowCommand">
                                     <Columns>
                                         <asp:CommandField SelectText="Seleccionar" ShowSelectButton="True" />
                                     </Columns>
@@ -40,10 +40,10 @@
                 <div class="panel-boy">
                      <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4>Registro de envios realizados</h4>
+                                <h4>Registro de pagos realizados</h4>
                             </div>
                              <div class="panel-body table-responsive"">
-                                <asp:GridView ID="envios_realizados_gridview" runat="server" CssClass="table table-striped table-bordered table-hover" Width="100%" OnRowCommand="envio_gridview_RowCommand">
+                                <asp:GridView ID="pagos_realizados_gridview" runat="server" CssClass="table table-striped table-bordered table-hover" Width="100%">
                                 </asp:GridView>
                              </div>
                      </div>
@@ -52,23 +52,16 @@
 
 
 
-    <asp:Label ID="lbl_envio" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="lbl_pedido" runat="server" Text="Label"></asp:Label>
 
      <div class="form-group">
-        <label>Repartidor</label>
+        <label>Estado</label>
         <div class="dropdown">
-        <asp:DropDownList  class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="combo_repartidor" runat="server">
-        </asp:DropDownList>
-            </div>
-    </div>
-        <div class="form-group">
-        <label>Demora</label>
-        <div class="dropdown">
-        <asp:DropDownList  class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="combo_demora" runat="server">
+        <asp:DropDownList  class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="combo_estado" runat="server">
         </asp:DropDownList>
             </div>
     </div>
 
-      <asp:Button ID="boton_envio" class="btn btn-primary" runat="server" Text="Registrar Envio" OnClick="boton_envio_Click"/>
 
+      <asp:Button ID="boton_pago" class="btn btn-primary" runat="server" Text="Registrar Pago" OnClick="boton_pago_Click"/>
 </asp:Content>

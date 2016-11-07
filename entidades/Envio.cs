@@ -14,6 +14,6 @@ namespace entidades
         public DateTime Fecha_Llegada { get; set; }
         public Pedido Pedido { get; set; }
         public Estado Estado { get; set; }
-        public int Nro_Envio { get; set; }
+        public long Nro_Envio { get; set; }
     }
 }

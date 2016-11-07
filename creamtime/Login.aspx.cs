@@ -33,7 +33,7 @@ namespace creamtime.Account
             {
                 Session["user"] = usuario;
                 Session["user_perm"] = GestorCliente.obtenerRolDeCliente(usuario.ClienteId);
-                Response.Redirect("~/AbmCliente", false);
+                Response.Redirect("~/", false);
                 
             }
             else

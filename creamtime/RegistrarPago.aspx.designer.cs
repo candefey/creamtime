@@ -10,7 +10,7 @@
 namespace creamtime {
     
     
-    public partial class RegistrarEnvio {
+    public partial class RegistrarPago {
         
         /// <summary>
         /// lbl_success control.
@@ -31,57 +31,48 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.Label lbl_error;
         
         /// <summary>
-        /// envio_gridview control.
+        /// pago_gridview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView envio_gridview;
+        protected global::System.Web.UI.WebControls.GridView pago_gridview;
         
         /// <summary>
-        /// envios_realizados_gridview control.
+        /// pagos_realizados_gridview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView envios_realizados_gridview;
+        protected global::System.Web.UI.WebControls.GridView pagos_realizados_gridview;
         
         /// <summary>
-        /// lbl_envio control.
+        /// lbl_pedido control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_envio;
+        protected global::System.Web.UI.WebControls.Label lbl_pedido;
         
         /// <summary>
-        /// combo_repartidor control.
+        /// combo_estado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList combo_repartidor;
+        protected global::System.Web.UI.WebControls.DropDownList combo_estado;
         
         /// <summary>
-        /// combo_demora control.
+        /// boton_pago control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList combo_demora;
-        
-        /// <summary>
-        /// boton_envio control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button boton_envio;
+        protected global::System.Web.UI.WebControls.Button boton_pago;
     }
 }

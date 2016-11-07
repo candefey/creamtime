@@ -87,8 +87,8 @@
                                        <li><a runat="server" href="~/AbmProveedor">Proveedores</a></li>
                                        <li><a runat="server" href="~/GestionCliente">Clientes</a></li>
                                        <li><a runat="server" href="~/AbmProducto">Productos</a></li>
-                                       <li><a runat="server" href="~/AbmCliente">Empleados</a></li>
-                                       <li><a runat="server" href="~/RegistrarEnvio">Envios</a></li>     
+                                       <li><a runat="server" href="~/RegistrarEnvio">Envios</a></li>
+                                       <li><a runat="server" href="~/RegistrarPago">Pagos</a></li>          
                                  <%                
                                      }
                                  %> 

@@ -217,6 +217,7 @@
     <Content Include="GestionCliente.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="RegistrarEnvio.aspx" />
+    <Content Include="RegistrarPago.aspx" />
     <Content Include="RegistrarPedido.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -348,6 +349,13 @@
     </Compile>
     <Compile Include="RegistrarEnvio.aspx.designer.cs">
       <DependentUpon>RegistrarEnvio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrarPago.aspx.cs">
+      <DependentUpon>RegistrarPago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarPago.aspx.designer.cs">
+      <DependentUpon>RegistrarPago.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegistrarPedido.aspx.cs">
       <DependentUpon>RegistrarPedido.aspx</DependentUpon>

@@ -55,9 +55,11 @@
     <Compile Include="DetallePedido.cs" />
     <Compile Include="Domicilio.cs" />
     <Compile Include="Envio.cs" />
+    <Compile Include="EnviosView.cs" />
     <Compile Include="Estado.cs" />
     <Compile Include="Localidad.cs" />
     <Compile Include="Pedido.cs" />
+    <Compile Include="PedidoEnvioView.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="ProductoView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

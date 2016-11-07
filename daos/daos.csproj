@@ -52,6 +52,8 @@
     <Compile Include="DaoCliente.cs" />
     <Compile Include="DaoDetallePedido.cs" />
     <Compile Include="DaoDomicilio.cs" />
+    <Compile Include="DaoEnvio.cs" />
+    <Compile Include="DaoPago.cs" />
     <Compile Include="DaoPedido.cs" />
     <Compile Include="DaoProducto.cs" />
     <Compile Include="DaoProveedor.cs" />
