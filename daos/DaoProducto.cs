@@ -332,7 +332,8 @@ namespace daos
                     cmd.Connection = con;
                     cmd.Transaction = tran;
 
-                    cmd.CommandText = @"DELETE FROM productos
+                    cmd.CommandText = @"UPDATE productos
+                                           SET vigente = 0
                                         WHERE codigo_producto=@codigo";
 
                     cmd.Parameters.AddWithValue("@codigo", codigo);
@@ -450,7 +451,8 @@ namespace daos
 	                                      ,prod.vigente                                                                              	                                      
                                       FROM productos prod INNER JOIN tipo_producto tpro
 	                                    ON prod.id_tipo = tpro.id
-                                     WHERE UPPER(tpro.nombre) = 'CREMA HELADA'";
+                                     WHERE UPPER(tpro.nombre) = 'CREMA HELADA'
+                                       AND prod.vigente = 1";
                 
                 //Abre conexion y consulta
                 con.Open();
@@ -518,7 +520,8 @@ namespace daos
                                           ,prod.agregados	                                      
                                       FROM productos prod INNER JOIN tipo_producto tpro
 	                                    ON prod.id_tipo = tpro.id
-                                     WHERE UPPER(tpro.nombre) != UPPER('crema helada')";
+                                     WHERE UPPER(tpro.nombre) != UPPER('crema helada')
+                                       AND prod.vigente = 1";
                 
                 //Abre conexion y consulta
                 con.Open();

@@ -32,7 +32,7 @@ namespace creamtime
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            cargarGrilla();
             if(!Page.IsPostBack)
             {
                 cargarCombo();
@@ -55,30 +55,26 @@ namespace creamtime
 
         protected void cargarGrilla()
         {
-            DateTime desde = new DateTime();
-            DateTime hasta = new DateTime();
-            string apellido;
-            int estado = -1;
+            DateTime? desde = null;
+            DateTime? hasta = null;
+            string apellido = null;
+            int? estado = null;
 
             if (!string.IsNullOrWhiteSpace(txt_fecha_desde.Text))
                 desde = Convert.ToDateTime(txt_fecha_desde.Text);
-            else
-                desde = Convert.ToDateTime("01/01/1900");
+            
 
             if (!string.IsNullOrWhiteSpace(txt_fecha_hasta.Text))
                 hasta = Convert.ToDateTime(txt_fecha_hasta.Text);
-            else
-                hasta = Convert.ToDateTime("31/12/3999");
-
-            if (!string.IsNullOrWhiteSpace(txt_apellido.Text))
-                apellido = txt_apellido.Text;
-            else
-                apellido = "";
-
-            if (combo_estado.SelectedValue != "Todos")
+            
+            if (combo_estado.SelectedValue != "Todos" && combo_estado.SelectedValue != "")
                 estado = int.Parse(combo_estado.SelectedValue);
 
-            grillaPedidos.DataSource = GestorPedido.informePedidos(desde, hasta, apellido, estado);
+            if (!string.IsNullOrWhiteSpace(txt_apellido_cliente.Text))
+                apellido = txt_apellido_cliente.Text;
+            
+            //RECUPERO LOS PEDIDOS
+            grillaPedidos.DataSource = GestorPedido.informePedidos(desde, hasta, estado, apellido);
             grillaPedidos.DataBind();
         }
 

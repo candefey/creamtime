@@ -49,13 +49,13 @@ namespace creamtime {
         protected global::System.Web.UI.WebControls.TextBox txt_fecha_hasta;
         
         /// <summary>
-        /// txt_apellido control.
+        /// txt_apellido_cliente control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_apellido;
+        protected global::System.Web.UI.WebControls.TextBox txt_apellido_cliente;
         
         /// <summary>
         /// combo_estado control.

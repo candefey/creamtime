@@ -16,9 +16,9 @@ namespace negocio
             dao.insertarPedido(pedido, detalles);
         }
 
-        public static List<Pedido> informePedidos(DateTime? desde, DateTime? hasta, string apellido, int? estado)
+        public static List<Pedido> informePedidos(DateTime? desde, DateTime? hasta, int? estado, string apellido)
         {
-            return DaoPedido.informePedidos(desde, hasta, apellido, estado);
+            return DaoPedido.informePedidos(desde, hasta, estado, apellido);
         }
     }
 }

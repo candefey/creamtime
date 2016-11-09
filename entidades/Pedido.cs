@@ -15,6 +15,6 @@ namespace entidades
         public Usuario Vendedor { get; set; }
         public Estado Estado { get; set; }
         public DateTime? Fecha_Pago { get; set; }
-        public int Nro_Pedido { get; set; }
+        public long Nro_Pedido { get; set; }
     }
 }

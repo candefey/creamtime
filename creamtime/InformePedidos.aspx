@@ -49,7 +49,7 @@
             </div>
 
             <div class="form-group">
-                <asp:TextBox placeholder="Apellido Cliente" class="form-control" ID="txt_apellido" runat="server"></asp:TextBox>
+                <asp:TextBox placeholder="Apellido Cliente" class="form-control" ID="txt_apellido_cliente" runat="server"></asp:TextBox>
             </div>
 
             <div class="form-group">
@@ -74,12 +74,12 @@
             <div class="panel-body table-responsive"">
                 <asp:GridView ID="grillaPedidos" CssClass="table table-striped table-bordered table-hover" Width="100%" runat="server" AutoGenerateColumns="False">
                     <Columns>
-                        <asp:BoundField DataField="Nro_Pedido" HeaderText="Numero" />
-                        <asp:BoundField DataField="Fecha_Pedido" HeaderText="Fecha" />
-                        <asp:BoundField DataField="Monto" HeaderText="Monto Total" />                        
-                        <asp:BoundField DataField="Estado.Nombre" HeaderText="Estado" />                     
-                        <asp:BoundField DataField="Cliente.Apellido" HeaderText="Apellido del Cliente" />
-                        <asp:BoundField DataField="Cliente.Nombre" HeaderText="Nombre del Cliente" />                        
+                        <asp:BoundField DataField="Nro_Pedido" HeaderStyle-HorizontalAlign="Center" HeaderText="Numero" />
+                        <asp:BoundField DataField="Fecha_Pedido" DataFormatString="{0:d}" HeaderStyle-HorizontalAlign="Center" HeaderText="Fecha" />
+                        <asp:BoundField DataField="Monto" ItemStyle-HorizontalAlign="Center" DataFormatString="${0:###,###,###.00}" HeaderStyle-HorizontalAlign="Center" HeaderText="Monto Total" />                        
+                        <asp:BoundField DataField="Estado.Nombre" HeaderStyle-HorizontalAlign="Center" HeaderText="Estado" />                     
+                        <asp:BoundField DataField="Cliente.Apellido" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderText="Apellido del Cliente" />
+                        <asp:BoundField DataField="Cliente.Nombre" ItemStyle-HorizontalAlign="Center" HeaderStyle-HorizontalAlign="Center" HeaderText="Nombre del Cliente" />                        
                     </Columns>
                 </asp:GridView>
             </div>
