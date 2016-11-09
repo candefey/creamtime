@@ -94,12 +94,13 @@
         <h4>Detalle de Compra</h4>
         </div>
          <div class="panel-body table-responsive"">
-                <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaDetalles" runat="server" AutoGenerateColumns="False">
+                <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaDetalles" runat="server" AutoGenerateColumns="False" OnRowDeleting="grillaDetalles_RowDeleting">
                     <Columns>
                         <asp:BoundField DataField="nombreMP" HeaderText="Materia Prima" />
                         <asp:BoundField DataField="nombreProveedor" HeaderText="Proveedor" />
                         <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
                         <asp:BoundField DataField="Monto" HeaderText="Monto" />
+                        <asp:CommandField ShowDeleteButton="True" />
                     </Columns>
                 </asp:GridView>
          <asp:Button ID="btn_confirmar" class="btn btn-info" runat="server" Text="Confirmar" OnClick="btn_confirmar_Click"/>

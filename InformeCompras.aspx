@@ -58,7 +58,8 @@
                     <Columns>
                 
                         <asp:BoundField DataField="Nro" HeaderText="Nro" />
-                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
+                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />                        
+                        <asp:BoundField DataField="NombreProveedor" HeaderText="Proveedor" />
                         <asp:BoundField DataField="Monto" HeaderText="Monto Total" />
                         <asp:CommandField ShowSelectButton="True" />
                 
@@ -67,7 +68,9 @@
          </div>
         <div class="panel-body table-responsive"">
                 <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaDetalleCompras" runat="server" AutoGenerateColumns="False" >
-                    <Columns>                
+                    <Columns>  
+                        <asp:BoundField DataField="NroCompra" HeaderText="Nro" /> 
+                        <asp:BoundField DataField="NombreProveedor" HeaderText="Proveedor" />             
                         <asp:BoundField HeaderText="Materia Prima" DataField="NombreMp" />
                         <asp:BoundField HeaderText="Cantidad" DataField="Cantidad" />
                         <asp:BoundField HeaderText="SubTotal" DataField="Monto" />
