@@ -139,7 +139,7 @@ namespace daos
 
 
 
-        public static void insertarCompras(List<DetalleCompra> detalles, float monto)
+        public static void insertarCompras(List<DetalleCompraView> detalles, float monto)
         {
             string cadenaConexion = ConfigurationManager.ConnectionStrings["CreamTimeConexion"].ConnectionString;
             SqlConnection cn = new SqlConnection();
@@ -159,13 +159,13 @@ namespace daos
                 cmd.Connection = cn;
                 cmd.Transaction = tran;
                 cmd.Parameters.AddWithValue("@fecha", DateTime.Now);
-                cmd.Parameters.AddWithValue("@monto",monto);
-                cmd.Parameters.AddWithValue("@nro", DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day);
+                cmd.Parameters.AddWithValue("@monto", monto);
+                cmd.Parameters.AddWithValue("@nro", DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second);
                 int idUltimaCompra = Convert.ToInt32(cmd.ExecuteScalar());
 
                 foreach (var de in detalles)
                 {
-               
+
                     string sqldetalle = "INSERT INTO detalle_compra (id_compra, id_materia_prima, cantidad, precio, id_proveedor)";
                     sqldetalle += " VALUES (@idCompra, @idMP, @cant, @precio, @id_pro)";
 
@@ -173,7 +173,7 @@ namespace daos
                     cmddetalle.CommandText = sqldetalle;
                     cmddetalle.Connection = cn;
                     cmddetalle.Transaction = tran;
-                    cmddetalle.Parameters.AddWithValue("@idCompra",idUltimaCompra);
+                    cmddetalle.Parameters.AddWithValue("@idCompra", idUltimaCompra);
                     cmddetalle.Parameters.AddWithValue("@idMP", de.IdMP);
                     cmddetalle.Parameters.AddWithValue("@cant", de.Cantidad);
                     cmddetalle.Parameters.AddWithValue("@precio", de.Monto);

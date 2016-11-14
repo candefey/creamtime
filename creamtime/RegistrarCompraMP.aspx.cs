@@ -34,15 +34,15 @@ namespace creamtime
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            List<DetalleCompra> lista;
+            List<DetalleCompraView> lista;
 
-            if (Application["detalles"] != null)
+            if (Session["detalles"] != null)
             {
-                lista = (List<DetalleCompra>)Application["detalles"];
+                lista = (List<DetalleCompraView>)Session["detalles"];
             }
             else
             {
-                lista = new List<DetalleCompra>();
+                lista = new List<DetalleCompraView>();
             }
 
 
@@ -51,7 +51,7 @@ namespace creamtime
 
             if (!Page.IsPostBack)
             {
-                
+
                 lbl_error_.Visible = false;
                 lbl_success_.Visible = false;
                 lbl_warning_.Visible = false;
@@ -65,52 +65,53 @@ namespace creamtime
                 combo_proveedores.ClearSelection();
                 combo_proveedores.Items.Add("Sin selección");
                 combo_proveedores.Items.FindByText("Sin selección").Selected = true;
+                combo_mp.Enabled = false;
             }
         }
 
         protected void combo_proveedores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-                int id = Convert.ToInt32(combo_proveedores.SelectedValue);
-                combo_mp.DataSource = GestorNuevaCompra.listarMPFiltro(id);
-                combo_mp.DataTextField = "Nombre";
-                combo_mp.DataValueField = "Id";
-                combo_mp.DataBind();
+            combo_mp.Enabled = true;
+            int id = Convert.ToInt32(combo_proveedores.SelectedValue);
+            combo_mp.DataSource = GestorNuevaCompra.listarMPFiltro(id);
+            combo_mp.DataTextField = "Nombre";
+            combo_mp.DataValueField = "Id";
+            combo_mp.DataBind();
 
         }
 
         protected void btn_agregar_Click(object sender, EventArgs e)
         {
-            
-                List<DetalleCompra> lista;
 
-                if (Application["detalles"] != null)
-                {
-                    lista = (List<DetalleCompra>)Application["detalles"];
-                }
-                else
-                {
-                    lista = new List<DetalleCompra>();
-                }
+            List<DetalleCompraView> lista;
+
+            if (Session["detalles"] != null)
+            {
+                lista = (List<DetalleCompraView>)Session["detalles"];
+            }
+            else
+            {
+                lista = new List<DetalleCompraView>();
+            }
 
 
-                int idp = Convert.ToInt16(combo_proveedores.SelectedValue);
-                string pro = combo_proveedores.SelectedItem.Text;
-                int idmp = Convert.ToInt16(combo_mp.SelectedValue);
-                string mp = combo_mp.SelectedItem.Text;
+            int idp = Convert.ToInt16(combo_proveedores.SelectedValue);
+            string pro = combo_proveedores.SelectedItem.Text;
+            int idmp = Convert.ToInt16(combo_mp.SelectedValue);
+            string mp = combo_mp.SelectedItem.Text;
 
-                DetalleCompra detalle = new DetalleCompra();
-                detalle.IdProveedor = idp;
-                detalle.nombreProveedor = pro;
-                detalle.nombreMP = mp;
-                detalle.IdMP = idmp;
-                detalle.Cantidad = Convert.ToInt32(txt_cantidad.Text);
-                MateriaPrima materia = GestorNuevaCompra.buscarMateriaPrima(idmp);
-                float monto = (float)materia.precio * detalle.Cantidad;
-                detalle.Monto = monto;
+            DetalleCompraView detalle = new DetalleCompraView();
+            detalle.IdProveedor = idp;
+            detalle.nombreProveedor = pro;
+            detalle.nombreMP = mp;
+            detalle.IdMP = idmp;
+            detalle.Cantidad = Convert.ToInt32(txt_cantidad.Text);
+            MateriaPrima materia = GestorNuevaCompra.buscarMateriaPrima(idmp);
+            float monto = (float)materia.precio * detalle.Cantidad;
+            detalle.Monto = monto;
 
-                lista.Add(detalle);
-                Application["detalles"] = lista;
+            lista.Add(detalle);
+            Session["detalles"] = lista;
 
 
         }
@@ -119,20 +120,41 @@ namespace creamtime
         {
             try
             {
-                List<DetalleCompra> lista= (List<DetalleCompra>)Application["detalles"];
-            GestorNuevaCompra.insertarCompra(lista);
-            combo_proveedores.ClearSelection();
-            combo_proveedores.Items.FindByText("Sin selección").Selected = true;
+                List<DetalleCompraView> lista = (List<DetalleCompraView>)Session["detalles"];
+                GestorNuevaCompra.insertarCompra(lista);
+                combo_proveedores.ClearSelection();
+                combo_proveedores.Items.FindByText("Sin selección").Selected = true;
+                combo_mp.Enabled = false;
 
-        }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Error generico en la inserción.");
-    }
-            finally
-            {
-                Application["detalles"] = null;
+                lbl_success_.Text = "Pedido de Compras de materias primas realizado con éxito!";
+                lbl_success_.Visible = true;
+                txt_cantidad.Text = "";
+                grillaDetalles.DataSource = null;
+                grillaDetalles.DataBind();
+                Session["detalles"] = null;
             }
+            catch (ApplicationException ex)
+            {
+
+                lbl_error_.Text = "Surgio un error";
+                lbl_error_.Visible = true;
+
+            }
+        }
+
+
+
+        protected void grillaDetalles_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            //String id_compra = grillaDetalles.DataKeys[Convert.ToInt32(e.RowIndex)].Value.ToString();
+            //Int64 id_compra_int = Convert.ToInt64(id_compra);
+            List<DetalleCompraView> lista;
+            lista = (List<DetalleCompraView>)Session["detalles"];
+            lista.RemoveAt(e.RowIndex);
+            Session["detalles"] = lista;
+
+
+
         }
     }
 }

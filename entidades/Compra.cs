@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace entidades
 {
-    public class DetalleCompra
+    public class Compra
     {
         public int Id { get; set; }
-        public int IdCompra { get; set; }
-        public int IdMP { get; set; }
-        public int IdProveedor { get; set; }
-        public int Cantidad { get; set; }
+        public DateTime Fecha { get; set; }
         public float Monto { get; set; }
+        public Int64 Nro { get; set; }
         public string NombreProveedor { get; set; }
-        public string NombreMP { get; set; }
     }
 }
-

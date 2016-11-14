@@ -24,7 +24,7 @@ namespace negocio
             return DaoMateriaPrima.buscarMateriaPrima(id);
         }
 
-        public static void insertarCompra(List<DetalleCompra> detalles)
+        public static void insertarCompra(List<DetalleCompraView> detalles)
         {
             float suma = 0;
             foreach (var d in detalles)

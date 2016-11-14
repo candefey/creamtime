@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="GestorCliente.cs" />
     <Compile Include="GestorEnvio.cs" />
+    <Compile Include="GestorInformeCompras.cs" />
     <Compile Include="GestorPagos.cs" />
     <Compile Include="GestorEstados.cs" />
     <Compile Include="GestorPedido.cs" />

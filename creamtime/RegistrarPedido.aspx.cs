@@ -175,9 +175,9 @@ namespace creamtime
         protected void btn_registrar_pedido_Click(object sender, EventArgs e)
         {
             //Verifico que haya cargado algun producto al carrito de compras
-            if (Application["listaDetalles"] != null)
+            if (Session["listaDetalles"] != null)
             {
-                List<DetallePedido> listaDetalles = (List<DetallePedido>)Application["listaDetalles"];
+                List<DetallePedido> listaDetalles = (List<DetallePedido>)Session["listaDetalles"];
 
                 Pedido pedido = new Pedido();
 
@@ -211,8 +211,7 @@ namespace creamtime
                     lbl_success.Visible = true;
                     lbl_warning.Visible = false;
                     lbl_error.Visible = false;
-
-                    Application.Clear();
+                    Session["listaDetalles"] = null;
                     cargarGrilla();
                     limpiar();
 

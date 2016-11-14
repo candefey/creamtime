@@ -24,7 +24,6 @@
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
          <script>
-
              $(document).ready(function () {
                  today = new Date();
                  dd = today.getDate();
@@ -44,7 +43,6 @@
     $( document ).tooltip();
   });
   $(document).ready(function () {
-
       setTimeout(function () {
           $(".alert").fadeIn();
           $(".alert").fadeTo(250, 0).slideUp(250, function () {
@@ -59,8 +57,7 @@
     width: 5em;
   }
   </style>
-         <asp:Label ID="Label1" runat="server" Text="Fecha Compra"></asp:Label>    
-         <asp:Label ID="fecha_hoy" runat="server" Text=""></asp:Label>
+         
     <h4>Detalle de la Compra </h4>
     <div class="form-group">
         <label>Proveedor</label>
@@ -95,19 +92,20 @@
         <h4>Detalle de Compra</h4>
         </div>
          <div class="panel-body table-responsive"">
-                <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaDetalles" runat="server">
+                <asp:GridView CssClass="table table-striped table-bordered table-hover" Width="100%" ID="grillaDetalles" runat="server" AutoGenerateColumns="False" OnRowDeleting="grillaDetalles_RowDeleting">
                     <Columns>
-                        
+                        <asp:BoundField DataField="nombreMP" HeaderText="Materia Prima" />
+                        <asp:BoundField DataField="nombreProveedor" HeaderText="Proveedor" />
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+                        <asp:BoundField DataField="Monto" HeaderText="Monto" />
+                        <asp:CommandField ShowDeleteButton="True" />
                     </Columns>
                 </asp:GridView>
-                  
-         </div>
-         <div>
          <asp:Button ID="btn_confirmar" class="btn btn-info" runat="server" Text="Confirmar" OnClick="btn_confirmar_Click"/>
          </div>
+        
      </div>
     </div>
  </div>
          </div>
-
 </asp:Content>
