@@ -59,28 +59,28 @@ $(document).ready(function () {
                 
                 <div class="form-group">
                 <div class="dropdown">
-                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_1" runat="server" AutoPostBack="True" Visible="false">
+                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_1" runat="server" AutoPostBack="false" Visible="false">
                 </asp:DropDownList>
                    </div>
                 </div>
 
                 <div class="form-group">
                 <div class="dropdown">
-                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_2" runat="server" AutoPostBack="True" Visible="false">
+                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_2" runat="server" AutoPostBack="false" Visible="false">
                 </asp:DropDownList>
                    </div>
                 </div>
 
                 <div class="form-group">
                 <div class="dropdown">
-                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_3" runat="server" AutoPostBack="True" Visible="false">
+                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_3" runat="server" AutoPostBack="false" Visible="false">
                 </asp:DropDownList>
                    </div>
                 </div>
 
                 <div class="form-group">
                 <div class="dropdown">
-                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_4" runat="server" AutoPostBack="True" Visible="false">
+                <asp:DropDownList class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ID="ddl_4" runat="server" AutoPostBack="false" Visible="false">
                 </asp:DropDownList>
                    </div>
                 </div>

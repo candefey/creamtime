@@ -52,7 +52,7 @@ namespace creamtime
 
         protected void cargarGrilla()
         {
-            List<DetallePedido> listaDetalles = (List<DetallePedido>)Application["listaDetalles"];
+            List<DetallePedido> listaDetalles = (List<DetallePedido>)Session["listaDetalles"];
 
             grillaProductos.DataSource = listaDetalles;
             string[] keys = new string[] { "ID" };
@@ -68,11 +68,12 @@ namespace creamtime
             combo_producto.DataTextField = "Nombre";
             combo_producto.DataValueField = "Id";
             combo_producto.DataBind();
-            combo_producto.Items.Add("Sin selección");
-            combo_producto.Items.FindByText("Sin selección").Selected = true;
+            combo_producto.Items.Add(new ListItem("Sin seleccion", "Todos"));
+            combo_producto.Items.FindByText("Sin seleccion").Selected = true;
         }
 
 
+        //Agrega un elemento al carrito de compras
         public void btn_agregarDetalle(object sender, EventArgs e)
         {
             DetallePedido detalle = new DetallePedido();
@@ -87,88 +88,60 @@ namespace creamtime
             prod.Id = int.Parse(combo_producto.SelectedValue);
             prod.Nombre = combo_producto.SelectedItem.Text;
             detalle.Producto = prod;
-            detalle.Precio = GestorProducto.obtenerProductoPorID(prod.Id).Precio;            
+            detalle.Precio = GestorProducto.obtenerProductoPorID(prod.Id).Precio;
 
-
-            if (Application["listaDetalles"] != null)
+            //Verifica si el carrito esta vacio
+            if (Session["listaDetalles"] != null)
             {
-                listaDetalles = (List<DetallePedido>)Application["listaDetalles"];
-                //Seteo id de detalle provisiorio
-                detalle.ID = listaDetalles.Count + 1;
-
-                listaSabores = new List<SubDetallePedido>();
-
-                List<DropDownList> dropdowns = new List<DropDownList>();
-                GetControlList<DropDownList>(Page.Controls, dropdowns);
-
-                foreach (var combo in dropdowns)
-                {
-                    string n = "ddl_" + i;
-                    if (combo.ID == n && combo.Visible == true)
-                    {
-                        subdetalle = new SubDetallePedido();
-                        prod = new Producto();
-
-                        prod.Id = int.Parse(combo.SelectedValue);
-                        prod.Nombre = combo.SelectedItem.Text;
-
-                        subdetalle.Producto = prod;
-
-                        listaSabores.Add(subdetalle);
-                        
-                        i += 1; 
-                    }
-                }
-                //Agrego sabores
-                detalle.sabores = listaSabores;
-
-                //Agrego el detalle
-                listaDetalles.Add(detalle);
-                Application.Add("listaDetalles", listaDetalles);
+                //Si tiene elementos, los almacena en la lista para persistirlos
+                listaDetalles = (List<DetallePedido>)Session["listaDetalles"];                
             }
             else
             {
+                //Crea la lista de cero
                 listaDetalles = new List<DetallePedido>();
-                //Seteo id (provisorio) de detalle
-                detalle.ID = 1;
-
-                listaSabores = new List<SubDetallePedido>();
-
-                List<DropDownList> dropdowns = new List<DropDownList>();
-                GetControlList<DropDownList>(Page.Controls, dropdowns);
-
-                foreach (var combo in dropdowns)
-                {
-                    string n = "ddl_" + i;
-                    if (combo.ID == n && combo.Visible == true)
-                    {                        
-                        subdetalle = new SubDetallePedido();
-                        prod = new Producto();
-
-                        prod.Id = int.Parse(combo.SelectedValue);
-                        prod.Nombre = combo.SelectedItem.Text;
-
-                        subdetalle.Producto = prod;
-
-                        listaSabores.Add(subdetalle);
-
-                        i += 1;
-                    }
-                }
-                //Agrego sabores
-                detalle.sabores = listaSabores;
-
-                //Agrego el detalle
-                listaDetalles.Add(detalle);
-                Application.Add("listaDetalles", listaDetalles);
             }
 
+            //Seteo id de detalle provisiorio
+            detalle.ID = listaDetalles.Count + 1;
 
+            listaSabores = new List<SubDetallePedido>();
+
+            //Recorro los sabores (en caso de que no haya no recorre nada)
+            List<DropDownList> dropdowns = new List<DropDownList>();
+            GetControlList<DropDownList>(Page.Controls, dropdowns);
+
+            foreach (var combo in dropdowns)
+            {
+                string n = "ddl_" + i;
+                if (combo.ID == n && combo.Visible == true)
+                {
+                    subdetalle = new SubDetallePedido();
+                    prod = new Producto();
+
+                    prod.Id = int.Parse(combo.SelectedValue);
+                    prod.Nombre = combo.SelectedItem.Text;
+
+                    subdetalle.Producto = prod;
+
+                    listaSabores.Add(subdetalle);
+
+                    i += 1;
+                }
+            }
+            //Agrego sabores
+            detalle.sabores = listaSabores;
+
+            //Agrego el detalle
+            listaDetalles.Add(detalle);
+            Session.Add("listaDetalles", listaDetalles);
+
+            //Limpio
             limpiar();
             cargarGrilla();
         }
 
-
+        //Elimina un elemento del carrito de compras
         protected void btn_eliminar_Click(object sender, GridViewDeleteEventArgs e)
         {
             String keyCod = grillaProductos.DataKeys[Convert.ToInt32(e.RowIndex)].Value.ToString();
@@ -176,9 +149,9 @@ namespace creamtime
             List<DetallePedido> listaDetalles;
             DetallePedido eliminar = new DetallePedido();
 
-            if (Application["listaDetalles"] != null)
+            if (Session["listaDetalles"] != null)
             {
-                listaDetalles = (List<DetallePedido>)Application["listaDetalles"];
+                listaDetalles = (List<DetallePedido>)Session["listaDetalles"];
 
                 foreach (DetallePedido detalle in listaDetalles)
                 {
@@ -192,7 +165,7 @@ namespace creamtime
                 if (eliminar != null)
                     listaDetalles.Remove(eliminar);
 
-                Application.Add("listaDetalles", listaDetalles);
+                Session.Add("listaDetalles", listaDetalles);
             }
 
             cargarGrilla();
@@ -211,7 +184,7 @@ namespace creamtime
                 Usuario user = (Usuario) Session["user"];
                 string username = user.Username;
                 pedido.Cliente = GestorCliente.obtenerClientePorUsuario(username);
-                pedido.Fecha_Pedido = DateTime.Now;
+                pedido.Fecha_Pedido = DateTime.Now.Date;
 
                 float monto = 0;
                 foreach (DetallePedido detalle in listaDetalles)
@@ -229,7 +202,7 @@ namespace creamtime
                 Random random = new Random();
                 pedido.Nro_Pedido = random.Next();
 
-
+                //REGISTRO EL PEDIDO
                 try
                 {
                     GestorPedido.registrarPedido(pedido, listaDetalles);
@@ -282,39 +255,46 @@ namespace creamtime
 
         protected void combo_producto_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int id = int.Parse(combo_producto.SelectedValue);
-
-            int cantidad = GestorProducto.obtenerAgregados(id);
-
-            List<Producto> sabores = GestorProducto.listaSabores();
-
-            //Limpio previo a mostrar
-            limpiar();
-
-            contenedorSabores.Visible = true;
-               
-            for (int i = 1; i < cantidad; i++)
+            if (combo_producto.SelectedValue != "Todos")
             {
-                List<DropDownList> dropdowns = new List<DropDownList>();
-                GetControlList<DropDownList>(Page.Controls, dropdowns);
+                int id = int.Parse(combo_producto.SelectedValue);
 
-                string nombre = "ddl_" + i; 
-                
-                foreach (var combo in dropdowns)
+                int cantidad = GestorProducto.obtenerAgregados(id);
+
+                List<Producto> sabores = GestorProducto.listaSabores();
+
+                //Limpio previo a mostrar
+                limpiar();
+
+                contenedorSabores.Visible = true;
+
+                for (int i = 1; i < cantidad; i++)
                 {
-                    if (combo.ID == nombre)
-                    { 
-                        combo.DataSource = sabores;
-                        combo.DataTextField = "Nombre";
-                        combo.DataValueField = "ID";
-                        combo.DataBind();
-                        
-                        combo.Visible = true;     
+                    List<DropDownList> dropdowns = new List<DropDownList>();
+                    GetControlList<DropDownList>(Page.Controls, dropdowns);
+
+                    string nombre = "ddl_" + i;
+
+                    foreach (var combo in dropdowns)
+                    {
+                        if (combo.ID == nombre)
+                        {
+                            combo.DataSource = sabores;
+                            combo.DataTextField = "Nombre";
+                            combo.DataValueField = "ID";
+                            combo.DataBind();
+
+                            combo.Visible = true;
+                        }
                     }
-                }                
+                }
+                if (cantidad > 0)
+                    lbl_sabores.Visible = true;
             }
-            if (cantidad > 0)
-                lbl_sabores.Visible = true;
+            else
+            {
+                contenedorSabores.Visible = false;
+            }
                 
         }
 
